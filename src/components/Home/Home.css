@@ -45,3 +45,20 @@
     color: rgb(255, 255, 255) !important;
     font-size: 20px !important;
 }
+
+.custom-footer {
+    padding: 7px 0 0 20px;
+    height: 40px;
+    background-color: var(--opal) !important;
+}
+.custom-anchor:hover {
+    color: var(--ultraRed);
+}
+
+.custom-ironhack {
+    padding-left: 4px;
+}
+
+.custom-ironhack:hover {
+    color: var(--cambridgeBlue);
+}
