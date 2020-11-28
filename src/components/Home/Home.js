@@ -32,6 +32,10 @@ const Home = () => {
                         </Link>
                     </article>
                 </div>
+                <br></br><br></br>
+                <p className="title has-text-centered">
+                    Últimas notícias registradas:
+                </p>
             </main>
     )
 }
