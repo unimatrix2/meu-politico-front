@@ -1,13 +1,13 @@
 import Home from './components/Home/Home';
-import Navbar from './components/Navbar/Navbar';
+import NavigationBar from './components/Navbar/Navbar';
 import About from './components/About/About';
-import 'bulma/css/bulma.css';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
     return (
         <div className="App">
-            <Navbar />
+            <NavigationBar />
 
             <Switch>
                 <Route exact path="/" component={Home} />
