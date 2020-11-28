@@ -6,7 +6,7 @@
     flex-direction: column;
 }
 
-.tile-margin {
+.home-tile {
     margin-top: 2%;
     width: 50%;
     height: fit-content;
@@ -34,6 +34,13 @@
 
 .button-light-blue-home {
     background-color: var(--opal) !important;
+    border-color: transparent !important;
+    color: rgb(255, 255, 255) !important;
+    font-size: 20px !important;
+}
+
+.button-ultra-red {
+    background-color: var(--ultraRed) !important;
     border-color: transparent !important;
     color: rgb(255, 255, 255) !important;
     font-size: 20px !important;
