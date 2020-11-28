@@ -1,0 +1,20 @@
+.is-honeydew {
+    background-color: var(--honeydew) !important;
+}
+
+.button-cambridge-blue {
+    background-color: var(--cambridgeBlue) !important;
+    border-color: transparent !important;
+    color: #fff !important;
+}
+
+.button-light-blue {
+    background-color: var(--lightBlue) !important;
+    border-color: transparent !important;
+    color: #fff !important;
+}
+
+.about-item:hover, .about-item:active, .about-item:visited {
+    background-color: var(--honeydew) !important;
+    color: rgb(74, 74, 74) !important;
+}
