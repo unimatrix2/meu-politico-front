@@ -33,7 +33,7 @@
 }
 
 .button-light-blue-home {
-    background-color: var(--lightBlue) !important;
+    background-color: var(--opal) !important;
     border-color: transparent !important;
     color: rgb(255, 255, 255) !important;
     font-size: 20px !important;
