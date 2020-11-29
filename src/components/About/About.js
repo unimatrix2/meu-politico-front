@@ -1,18 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 const About = ({isFaq}) => {
     return !isFaq ? (
             <main className="main-home-content">
-            <div className="container" style={{display: 'flex', flexDirection: 'column'}}>
+            <div className="container d-flex flex-column">
                 <br></br>
-                <h1 className="title is-1 has-text-centered">Bem Vindo(a) ao Meu Político!</h1>
-                <br></br>
-                <h2 className="subtitle is-3 has-text-centered">
+                <h1 className="display-4 font-weight-bold text-center">Bem Vindo(a) ao Meu Político!</h1>
+                <h2 className="h2 text-center">
                     Meu Político é um serviço que foi criado com a intenção de agregar notícias e checagens sobre 
                     ações e discursos de políticos de todo o país.
                 </h2>
-                <p className="subtitle is-5 has-text-justified">
+                <br></br>
+                <p className="h5 text-justify">
                 Considerando a proporção que as “fake news” tomaram não somente no Brasil mas em diversos lugares 
                 do mundo, todo nosso entendimento da realidade foi alterado e ficou especialmente difícil distinguir 
                 as coisas no nebuloso campo da política. Não é novidade que nesse assunto (política), a mentira sempre 
@@ -24,7 +25,7 @@ const About = ({isFaq}) => {
                 desmascará-las.
                 </p>
                 <br></br>
-                <p className="subtitle is-5 has-text-justified">
+                <p className="h5 text-justify">
                 Se ao menos a gente pudesse contar as mentiras desses políticos... poderíamos fazer com que  nos contem 
                 novas mentiras! Ou de repente… serem honestos, mas essa última proposta como diriam os políticos, é muito 
                 radical. O Meu Político é uma plataforma que chega para preencher essa lacuna, e você pode fazer parte 
@@ -32,36 +33,37 @@ const About = ({isFaq}) => {
                 políticos do Brasil.
                 </p>
                 <br></br>
-                <p className="subtitle is-5 has-text-justified">
+                <p className="h5 text-justify">
                 Já pensou em poder averiguar o que um político está falando em questão de segundos? Imagina então, todos 
                 os candidatos de um debate podendo flagrar mentiras antes mesmo da réplica? Essa é a nossa proposta: 
                 retirar a cortina de fumaça para avaliar o que nossos políticos falam e fazem (ou deixam de fazer). 
                 Funciona assim:
                 </p>
                 <br></br>
-                <p className="subtitle is-5 has-text-justified">
+                <p className="h5 text-justify">
                 Você procura um político e receberá notícias sobre ele ou ela. Cada notícia possui uma categoria que pode 
                 ser positiva, negativa, corrupção, promessa cumprida e promessa descumprida, assim fica mais fácil saber 
                 do que se trata o assunto. Quando não existir um político que você conhece ou quer saber mais sobre, você 
                 pode adicionar na plataforma, bem como adicionar notícias sobre esse político, e outras fontes da mesma notícia.
                 </p>
-                <div style={{alignSelf: "center", display: "flex", width: "40%", justifyContent: "space-between"}}>
-                    <Link to="/faq" className="button button-light-blue-home">Perguntas Frequentes</Link>
-                    <Link to="/" className="button button-light-blue-home">Voltar para o Início</Link>
+                <br></br>
+                <div className="d-flex w-50 justify-content-between align-self-center">
+                    <Button as={Link} to="/faq" className="btn btn-lg button-light-blue-home">Perguntas Frequentes</Button>
+                    <Button as={Link} to="/" className="btn btn-lg button-light-blue-home">Voltar para o Início</Button>
                 </div>
             </div>
             </main>
     ) : (
         <main className="main-home-content">
-            <div className="container" style={{display: 'flex', flexDirection: 'column'}}>
+            <div className="container d-flex flex-column">
                 <br></br>
-                <h1 className="title is-1 has-text-centered">Perguntas Frequentes</h1>
+                <h1 className="display-4 font-weight-bold text-center">Perguntas Frequentes</h1>
                 <br></br>
-                <p className="subtitle is-3 has-text-justified">
+                <p className="h3 text-justify">
                     <strong>Como controlamos a qualidade da informação? Não seria muito fácil adicionar um político que não existe ou uma 
                 notícia falsa sobre alguém?</strong>
                 </p>
-                <p className="subtitle is-4 has-text-justified">
+                <p className="h5 text-justify">
                 Há duas respostas: sim e não. A plataforma conta com um sistema de aprovação para 
                 qualquer informação, nossos voluntários são responsáveis por verificar todas as notícias e políticos, mas 
                 acreditamos em transparência e portanto, disponibilizamos tudo sempre. Mas não se preocupe! Sempre que buscar 
@@ -70,10 +72,10 @@ const About = ({isFaq}) => {
                 Superior Eleitoral) ou outros órgãos públicos.
                 </p>
                 <br></br>
-                <p className="subtitle is-3 has-text-justified">
+                <p className="h3 text-justify">
                     <strong>E sobre diversidade de fontes? Vocês ganham de alguém para promover órgãos de imprensa?</strong>
                 </p>
-                <p className="subtitle is-4 has-text-justified">
+                <p className="h5 text-justify">
                 Nós não recebemos qualquer ajuda ou doação que não seja da campanha de financiamento coletivo mantida por nossos 
                 usuários, voluntários e seguidores. Em questão de diversidade de fontes, o Meu Político possui um sistema único que 
                 agrega diversas fontes da mesma notícia. Geralmente a primeira manchete registrada é a que constará no título, salvo 
@@ -83,9 +85,10 @@ const About = ({isFaq}) => {
                 veículos que possuam frequentes condenações, ordens judiciais ou menções em agências de checagem por espalharem “fake 
                 news”, uma vez que não temos como garantir a qualidade da informação desses veículos.
                 </p>
-                <Link to="/" className="button button-light-blue-home" style={{alignSelf: "center"}}>
+                <br></br>
+                <Button as={Link} to="/" className="btn btn-lg button-light-blue-home" style={{alignSelf: "center"}}>
                     Voltar ao Início
-                </Link>
+                </Button>
             </div>
         </main>
     )
