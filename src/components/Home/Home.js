@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Jumbotron, Button, Container, Image } from 'react-bootstrap';
+import { Jumbotron, Button, Container } from 'react-bootstrap';
 import Footer from '../Footer/Footer';
 import './Home.css';
 
