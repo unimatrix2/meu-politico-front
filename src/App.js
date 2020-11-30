@@ -1,16 +1,18 @@
 import Home from './components/Home/Home';
+import { useState } from 'react';
 import NavigationBar from './components/Navbar/Navbar';
 import About from './components/About/About';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
+    const [showSignup, setShowSignup] = useState(false);
     return (
         <div className="App" style={{backgroundColor: "var(--honeydew)"}}>
-            <NavigationBar />
+            <NavigationBar showSignup={showSignup} setShowSignup={setShowSignup} />
 
             <Switch>
-                <Route exact path="/" component={Home} />
+                <Route exact path="/" render={() => <Home showSignup={showSignup} setShowSignup={setShowSignup} />} />
                 <Route exact path="/sobre" render={() => <About isFaq={false} />} />
                 <Route exact path="/faq" render={() => <About isFaq={true} />} />
             </Switch>

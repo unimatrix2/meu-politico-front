@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Jumbotron, Button, Container } from 'react-bootstrap';
 import Footer from '../Footer/Footer';
 import './Home.css';
 
-const Home = () => {
+const Home = ({showSignup, setShowSignup}) => {
     return (
         <>
             <main className="main-home-content">
@@ -26,7 +26,7 @@ const Home = () => {
                             <Button as={Link} to="/" className="btn btn-lg button-ultra-red">
                                 Seja um voluntário
                             </Button>
-                            <Button as={Link} to="/" className="btn btn-lg button-light-blue-home" >
+                            <Button onClick={() => setShowSignup(true)} className="btn btn-lg button-light-blue-home" >
                                 Crie uma conta
                             </Button>
                         </Container>
