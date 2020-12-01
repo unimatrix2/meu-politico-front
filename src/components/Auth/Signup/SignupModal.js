@@ -122,7 +122,6 @@ const SignupModal = ({show, onHide}) => {
                                     isInvalid={touched.firstName && errors.firstName}
                                     className="input-custom"
                                 />
-                                <Form.Control.Feedback>Perfeito!</Form.Control.Feedback>
                                 <Form.Control.Feedback type="invalid">{errors.firstName}</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="10" controlId="validationFormik02">
@@ -137,7 +136,6 @@ const SignupModal = ({show, onHide}) => {
                                     isInvalid={touched.lastName && errors.lastName}
                                     className="input-custom"
                                 />
-                                <Form.Control.Feedback>Perfeito!</Form.Control.Feedback>
                                 <Form.Control.Feedback type="invalid">{errors.lastName}</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="10" controlId="validationFormik03">
@@ -152,7 +150,6 @@ const SignupModal = ({show, onHide}) => {
                                     isInvalid={touched.email && errors.email}
                                     className="input-custom"
                                 />
-                                <Form.Control.Feedback>Perfeito!</Form.Control.Feedback>
                                 <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="10" controlId="validationFormik04">
@@ -168,9 +165,7 @@ const SignupModal = ({show, onHide}) => {
                                     isInvalid={touched.cpf && errors.cpf}
                                     className="input-custom"
                                 />
-
                                 </OverlayTrigger>
-                                <Form.Control.Feedback>Perfeito!</Form.Control.Feedback>
                                 <Form.Control.Feedback type="invalid">{errors.cpf}</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="10" controlId="validationFormik05">
@@ -187,7 +182,6 @@ const SignupModal = ({show, onHide}) => {
                                     className="input-custom"
                                 />
                                 </OverlayTrigger>
-                                <Form.Control.Feedback>Perfeito!</Form.Control.Feedback>
                                 <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="10" controlId="validationFormik06">
@@ -202,7 +196,6 @@ const SignupModal = ({show, onHide}) => {
                                     isInvalid={touched.confirmPassword && errors.confirmPassword}
                                     className="input-custom"
                                 />
-                                <Form.Control.Feedback>Perfeito!</Form.Control.Feedback>
                                 <Form.Control.Feedback type="invalid">{errors.confirmPassword}</Form.Control.Feedback>
                             </Form.Group>
                             <Modal.Footer className="modal-footer">
