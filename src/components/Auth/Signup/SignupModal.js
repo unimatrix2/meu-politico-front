@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Modal, Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
 import { Formik } from 'formik';
+import MaskedInput from 'react-maskedinput';
 import * as yup from 'yup';
 import './SignupModal.css';
 
@@ -53,8 +54,9 @@ const SignupModal = ({show, onHide}) => {
 		cpf: yup
 			.string()
 			.trim()
-			.min(11, "Digite um CPF válido")
-			.max(11, "Digite um CPF válido")
+            .matches(/[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}/, 'CPF inválido')
+            .min(11, 'CPF Inválido')
+            .max(14, 'CPF inválido')
 			.required("Campo obrigatório"),
 		password: yup
 			.string()
@@ -156,6 +158,7 @@ const SignupModal = ({show, onHide}) => {
                                 <Form.Label>CPF</Form.Label>
                                 <OverlayTrigger trigger="focus" placement="right" overlay={cpfPopover}>
                                 <Form.Control
+                                as={MaskedInput}
                                     type="text"
                                     name="cpf"
                                     value={values.cpf}
@@ -164,6 +167,7 @@ const SignupModal = ({show, onHide}) => {
                                     isValid={touched.cpf && !errors.cpf}
                                     isInvalid={touched.cpf && errors.cpf}
                                     className="input-custom"
+                                    mask="111.111.111-11"
                                 />
                                 </OverlayTrigger>
                                 <Form.Control.Feedback type="invalid">{errors.cpf}</Form.Control.Feedback>
