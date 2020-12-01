@@ -42,7 +42,7 @@ const LoginModal = ({show, onHide}) => {
         >
             <Modal.Header closeButton className="modal-header">
                 <Modal.Title id="contained-modal-title-vcenter" className="text-center">
-                    Acessar sua Conta
+                    Acesse sua Conta
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="modal-body">
