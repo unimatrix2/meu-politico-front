@@ -1,22 +1,75 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Modal, Button, Form, Col } from 'react-bootstrap';
+import { Modal, Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import './SignupModal.css';
+
+const cpfPopover = (
+    <Popover id="popover-basic" className="modal-body">
+        <Popover.Content>
+            Seu CPF é utilizado apenas apra impedir abusos na plataforma.
+        </Popover.Content>
+    </Popover>
+)
+
+const passwordPopover = (
+    <Popover id="popover-basic" className="modal-body">
+        <Popover.Title className="modal-body" as="h3">Sua senha precisa conter:</Popover.Title>
+        <Popover.Content>
+            <ul>
+                <li>Ao menos 8 caracteres</li>
+                <li>Ao menos um número</li>
+                <li>Ao menos uma letra maiúscula</li>
+            </ul>
+        </Popover.Content>
+    </Popover>
+)
 
 const SignupModal = ({show, onHide}) => {
     const [isSignupSuccesfull, setIsSignupSuccesfull] = useState(false);
 
     //schema de validação
     const schema = yup.object({
-        firstName: yup.string().trim().min(3, 'Mínimo de 3 caracteres').max(50, 'Máximo de 50 caracteres').required('Campo obrigatório'),
-        lastName: yup.string().trim().min(3, 'Mínimo de 3 caracteres').max(100, 'Máximo de 100 caracteres').required('Campo obrigatório'),
-        email: yup.string().trim().email('Digite um e-mail válido').required('Campo obrigatório'),
-        cpf: yup.string().trim().min(11, 'Digite um CPF válido').max(11, 'Digite um CPF válido').required('Campo obrigatório'),
-        password: yup.string().trim().min(8, 'Mínimo de 8 caracteres').max(200, 'Máximo de 200 caracteres').required('Campo obrigatório'),
-        confirmPassword: yup.string().trim().oneOf([yup.ref('password'), null], 'Senhas precisam combinar').required('Campo')
-    });
+		firstName: yup
+			.string()
+			.trim()
+			.matches(/^[A-Z]/, "Primeira letra maiúscula")
+			.min(3, "Mínimo de 3 caracteres")
+			.max(50, "Máximo de 50 caracteres")
+			.required("Campo obrigatório"),
+		lastName: yup
+			.string()
+			.trim()
+			.matches(/^[A-Z]/, "Primeira letra maiúscula")
+			.min(3, "Mínimo de 3 caracteres")
+			.max(100, "Máximo de 100 caracteres")
+			.required("Campo obrigatório"),
+		email: yup
+			.string()
+			.trim()
+			.email("Digite um e-mail válido")
+			.required("Campo obrigatório"),
+		cpf: yup
+			.string()
+			.trim()
+			.min(11, "Digite um CPF válido")
+			.max(11, "Digite um CPF válido")
+			.required("Campo obrigatório"),
+		password: yup
+			.string()
+			.trim()
+            .matches(/[A-Z]/, "Ao menos uma letra maiúscula")
+            .matches(/[0-9]/, "Ao menos um número")
+			.min(8, "Mínimo de 8 caracteres")
+			.max(200, "Máximo de 200 caracteres")
+			.required("Campo obrigatório"),
+		confirmPassword: yup
+			.string()
+			.trim()
+			.oneOf([yup.ref("password"), null], "Senhas precisam combinar")
+			.required("Campo obrigatório"),
+	});
     // estado inicial para o Formik
     const initState = {
         firstName: '',
@@ -104,6 +157,7 @@ const SignupModal = ({show, onHide}) => {
                             </Form.Group>
                             <Form.Group as={Col} md="10" controlId="validationFormik04">
                                 <Form.Label>CPF</Form.Label>
+                                <OverlayTrigger trigger="focus" placement="right" overlay={cpfPopover}>
                                 <Form.Control
                                     type="text"
                                     name="cpf"
@@ -114,11 +168,14 @@ const SignupModal = ({show, onHide}) => {
                                     isInvalid={touched.cpf && errors.cpf}
                                     className="input-custom"
                                 />
+
+                                </OverlayTrigger>
                                 <Form.Control.Feedback>Perfeito!</Form.Control.Feedback>
                                 <Form.Control.Feedback type="invalid">{errors.cpf}</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="10" controlId="validationFormik05">
                                 <Form.Label>Senha</Form.Label>
+                                <OverlayTrigger trigger="focus" placement="right" overlay={passwordPopover}>
                                 <Form.Control
                                     type="password"
                                     name="password"
@@ -129,6 +186,7 @@ const SignupModal = ({show, onHide}) => {
                                     isInvalid={touched.password && errors.password}
                                     className="input-custom"
                                 />
+                                </OverlayTrigger>
                                 <Form.Control.Feedback>Perfeito!</Form.Control.Feedback>
                                 <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
                             </Form.Group>
