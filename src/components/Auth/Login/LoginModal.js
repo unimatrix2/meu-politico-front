@@ -93,7 +93,7 @@ const LoginModal = ({show, onHide}) => {
                                 <Form.Control.Feedback type="invalid">E-mail ou senha Incorretos</Form.Control.Feedback>
                             </Form.Group>
                             <Modal.Footer className="modal-footer">
-                                <Button type="submit" className="btn btn-lg modal-btn-custom-login">Entrar</Button>
+                                <Button type="submit" onClick={onHide} className="btn btn-lg modal-btn-custom-login">Entrar</Button>
                                 <Button onClick={onHide} className="btn btn-lg modal-btn-custom-close">Fechar</Button>
                             </Modal.Footer>
                         </Form>
