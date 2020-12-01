@@ -1,0 +1,42 @@
+.modal-header {
+    background-color: var(--honeydew);
+    border: none !important;
+}
+
+.modal-body {
+    background-color: var(--honeydew);
+}
+
+.form-input {
+    background-color: var(--honeydew);
+    border: 0;
+    border-bottom: 1px solid black;
+}
+.modal-footer {
+    border: none !important;
+}
+
+.input-custom {
+    background-color: var(--honeydew) !important;
+    border: 0 !important;
+    border-bottom: 1px solid black !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.input-custom:active {
+    background-color: var(--honeydew) !important;
+    border: 0 !important;
+    border-bottom: 1px solid black !important;
+    border-radius: 0 !important;
+}
+
+.modal-btn-custom-login {
+    background-color: var(--cambridgeBlue) !important;
+    border: none !important;
+}
+
+.modal-btn-custom-close {
+    background-color: var(--lightBlue) !important;
+    border: none !important;
+}
