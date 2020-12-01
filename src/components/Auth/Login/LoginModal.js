@@ -18,6 +18,10 @@ const LoginModal = ({show, onHide}) => {
         password: ''
     };
 
+    const handleSubmitMethod = async (values, helpers) => {
+        // Necessita das rotas prontas para concluir
+    }
+
     return (
         <Modal
             show={show}
