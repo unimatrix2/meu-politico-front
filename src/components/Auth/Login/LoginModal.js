@@ -9,9 +9,20 @@ const LoginModal = ({show, onHide}) => {
 
     //schema de validação
     const schema = yup.object({
-        email: yup.string().trim().email('Digite um e-mail válido').required('Campo obrigatório'),
-        password: yup.string().trim().min(8, 'Mínimo de 8 caracteres').max(200, 'Máximo de 200 caracteres').required('Campo obrigatório'),
-    });
+		email: yup
+			.string()
+			.trim()
+			.email("Digite um e-mail válido")
+			.required("Campo obrigatório"),
+		password: yup
+			.string()
+			.trim()
+			.matches(/[A-Z]/, "Ao menos uma letra maiúscula")
+			.matches(/[0-9]/, "Ao menos um número")
+			.min(8, "Mínimo de 8 caracteres")
+			.max(200, "Máximo de 200 caracteres")
+			.required("Campo obrigatório"),
+	});
 
     const initState = {
         email: '',
@@ -57,11 +68,12 @@ const LoginModal = ({show, onHide}) => {
                                     value={values.email}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    isValid={touched.email && !errors.email}
-                                    isInvalid={touched.email && errors.email}
+                                    isValid={touched.email && !errors.email && touched.password && !errors.password}
+                                    // Com a invalidação condicionada a ambos, o usuário só sabe que o email
+                                    // é valido quando a senha também preencher os requisitos
+                                    isInvalid={(touched.email && errors.email) || (touched.password && errors.password)}
                                     className="input-custom"
                                 />
-                                <Form.Control.Feedback>Perfeito!</Form.Control.Feedback>
                                 <Form.Control.Feedback type="invalid">E-mail ou senha Incorretos</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="10" controlId="validationFormik05">
@@ -72,11 +84,12 @@ const LoginModal = ({show, onHide}) => {
                                     value={values.password}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    isValid={touched.password && !errors.password}
-                                    isInvalid={touched.email && errors.email}
+                                    isValid={touched.password && !errors.password && touched.email && !errors.email}
+                                    // Com a invalidação condicionada a ambos, o usuário só sabe que o email
+                                    // é valido quando a senha também preencher os requisitos
+                                    isInvalid={(touched.password && errors.password) || (touched.email && errors.email) }
                                     className="input-custom"
                                 />
-                                <Form.Control.Feedback>Perfeito!</Form.Control.Feedback>
                                 <Form.Control.Feedback type="invalid">E-mail ou senha Incorretos</Form.Control.Feedback>
                             </Form.Group>
                             <Modal.Footer className="modal-footer">
