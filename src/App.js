@@ -7,9 +7,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
     const [showSignup, setShowSignup] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
     return (
         <div className="App" style={{backgroundColor: "var(--honeydew)"}}>
-            <NavigationBar showSignup={showSignup} setShowSignup={setShowSignup} />
+            <NavigationBar
+            showSignup={showSignup}
+            setShowSignup={setShowSignup}
+            showLogin={showLogin}
+            setShowLogin={setShowLogin}
+            />
 
             <Switch>
                 <Route exact path="/" render={() => <Home showSignup={showSignup} setShowSignup={setShowSignup} />} />
