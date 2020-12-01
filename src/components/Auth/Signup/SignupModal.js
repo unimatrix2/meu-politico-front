@@ -6,6 +6,7 @@ import MaskedInput from 'react-maskedinput';
 import * as yup from 'yup';
 import './SignupModal.css';
 
+// Pop over do campo de CPF
 const cpfPopover = (
     <Popover id="popover-basic" className="modal-body">
         <Popover.Content>
@@ -14,6 +15,7 @@ const cpfPopover = (
     </Popover>
 )
 
+// Pop over do campo de senha
 const passwordPopover = (
     <Popover id="popover-basic" className="modal-body">
         <Popover.Title className="modal-body" as="h3">Sua senha precisa conter:</Popover.Title>
@@ -81,8 +83,14 @@ const SignupModal = ({show, onHide}) => {
         password: ''
     };
 
+    // Método de submissão do fomrmulário
     const handleSubmitMethod = async (values, helpers) => {
-        // Necessita das rotas prontas para concluir
+        // Precisa realizar a requisição axios
+       console.log(values);
+       // Precisa dar feedback ao usuário
+       // Depois de um ou dois segundos, precisa
+       // alterar o estado do App.js para fechar o modal
+       // e por último abrir o modal de login
     }
 
     return (
@@ -100,7 +108,7 @@ const SignupModal = ({show, onHide}) => {
             <Modal.Body className="modal-body">
                 <Formik
                     initialValues={initState}
-                    onSubmit={console.log} // handleSubmitMethod
+                    onSubmit={handleSubmitMethod}
                     validationSchema={schema}
                 >
                     {({
@@ -158,7 +166,8 @@ const SignupModal = ({show, onHide}) => {
                                 <Form.Label>CPF</Form.Label>
                                 <OverlayTrigger trigger="focus" placement="right" overlay={cpfPopover}>
                                 <Form.Control
-                                as={MaskedInput}
+                                    // Usando masked input aqui para o cpf
+                                    as={MaskedInput}
                                     type="text"
                                     name="cpf"
                                     value={values.cpf}
