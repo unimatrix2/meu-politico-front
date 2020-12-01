@@ -24,13 +24,21 @@ const LoginModal = ({show, onHide}) => {
 			.required("Campo obrigatório"),
 	});
 
+    // estado inicial
     const initState = {
         email: '',
         password: ''
     };
 
+    // Método de submissão do formulário
     const handleSubmitMethod = async (values, helpers) => {
         // Necessita das rotas prontas para concluir
+        console.log(values)
+        // Precisa fazer a requisição axios
+        // Dar feedback ao usuário
+        // Criar o token
+        // Fechar o modal e mudar o estado (isUserAuthed)
+        // da navbar para dar acesso as areas privadas
     }
 
     return (
@@ -48,7 +56,7 @@ const LoginModal = ({show, onHide}) => {
             <Modal.Body className="modal-body">
                 <Formik
                     initialValues={initState}
-                    onSubmit={console.log} // handleSubmitMethod
+                    onSubmit={handleSubmitMethod}
                     validationSchema={schema}
                 >
                     {({
@@ -93,7 +101,7 @@ const LoginModal = ({show, onHide}) => {
                                 <Form.Control.Feedback type="invalid">E-mail ou senha Incorretos</Form.Control.Feedback>
                             </Form.Group>
                             <Modal.Footer className="modal-footer">
-                                <Button type="submit" onClick={onHide} className="btn btn-lg modal-btn-custom-login">Entrar</Button>
+                                <Button type="submit" className="btn btn-lg modal-btn-custom-login">Entrar</Button>
                                 <Button onClick={onHide} className="btn btn-lg modal-btn-custom-close">Fechar</Button>
                             </Modal.Footer>
                         </Form>
