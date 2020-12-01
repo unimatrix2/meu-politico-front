@@ -4,7 +4,7 @@
 }
 
 .modal-body {
-    background-color: var(--honeydew);
+    background-color: var(--honeydew) !important;
 }
 
 .form-input {
