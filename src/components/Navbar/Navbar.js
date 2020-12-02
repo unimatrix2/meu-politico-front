@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, NavDropdown, Button} from 'react-bootstrap';
+import SignupModal from '../Auth/Signup/SignupModal';
+import LoginModal from '../Auth/Login/LoginModal';
 import './Navbar.css';
 
-const NavigationBar = ({ isUserAuthed }) => {
+const NavigationBar = ({
+    isUserAuthed,
+    showSignup,
+    setShowSignup,
+    showLogin,
+    setShowLogin,
+    }) => {
     return (
         <Navbar expand="lg" className="is-honeydew sticky-top shadow-sm">
             <Navbar.Brand as={Link} to="/" className="font-weight-bolder">MeuPolítico</Navbar.Brand>
@@ -29,13 +37,15 @@ const NavigationBar = ({ isUserAuthed }) => {
             : <Navbar.Collapse className="flex-row justify-content-end">
             <Nav>
                 <Nav.Item className="mr-2">
-                    <Button className="button-opal btn-lg">Cadastrar</Button>
+                    <Button className="button-opal btn-lg" onClick={() => setShowSignup(true)}>Cadastrar</Button>
                 </Nav.Item>
                 <Nav.Item>
-                    <Button className="button-cambridge-blue btn-lg">Entrar</Button>
+                    <Button className="button-cambridge-blue btn-lg" onClick={() => setShowLogin(true)}>Entrar</Button>
                 </Nav.Item>
             </Nav>
             </Navbar.Collapse>}
+            <SignupModal show={showSignup} onHide={() => setShowSignup(false)} />
+            <LoginModal show={showLogin} onHide={() => setShowLogin(false)} />
         </Navbar>
     )
 }

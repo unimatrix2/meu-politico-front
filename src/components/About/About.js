@@ -85,6 +85,13 @@ const About = ({isFaq}) => {
                 veículos que possuam frequentes condenações, ordens judiciais ou menções em agências de checagem por espalharem “fake 
                 news”, uma vez que não temos como garantir a qualidade da informação desses veículos.
                 </p>
+                <p className="h3 text-justify">
+                    <strong>Por que pedem CPF para registrar uma conta?</strong>
+                </p>
+                <p className="h5 text-justify">
+                Seu CPF é utilizado apenas apra impedir abusos na plataforma. Como cada pessoa só possui um CPF, podemos auditar com
+                mais facilidade CPFs falsos e contas falsas.
+                </p>
                 <br></br>
                 <Button as={Link} to="/" className="btn btn-lg button-light-blue-home" style={{alignSelf: "center"}}>
                     Voltar ao Início
