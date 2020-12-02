@@ -24,6 +24,8 @@ const passwordPopover = (
                 <li>Ao menos 8 caracteres</li>
                 <li>Ao menos um número</li>
                 <li>Ao menos uma letra maiúscula</li>
+                <li>Ao menos uma letra minúscula</li>
+                <li>Ao menos um caractere especial (! @ # $ % ^ & * + = _ ? -)</li>
             </ul>
         </Popover.Content>
     </Popover>
@@ -64,7 +66,9 @@ const SignupModal = ({show, onHide}) => {
 			.string()
 			.trim()
             .matches(/[A-Z]/, "Ao menos uma letra maiúscula")
+            .matches(/[a-z]/, "Ao menos uma letra minúscula")
             .matches(/[0-9]/, "Ao menos um número")
+            .matches(/[!@#$%^&*+=_?-]/, "Ao menos um caractere especial")
 			.min(8, "Mínimo de 8 caracteres")
 			.max(200, "Máximo de 200 caracteres")
 			.required("Campo obrigatório"),
