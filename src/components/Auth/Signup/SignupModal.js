@@ -131,6 +131,7 @@ const SignupModal = ({show, onHide}) => {
                                     isValid={touched.firstName && !errors.firstName}
                                     isInvalid={touched.firstName && errors.firstName}
                                     className="input-custom"
+                                    autoComplete="off"
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.firstName}</Form.Control.Feedback>
                             </Form.Group>
@@ -145,6 +146,7 @@ const SignupModal = ({show, onHide}) => {
                                     isValid={touched.lastName && !errors.lastName}
                                     isInvalid={touched.lastName && errors.lastName}
                                     className="input-custom"
+                                    autoComplete="off"
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.lastName}</Form.Control.Feedback>
                             </Form.Group>
@@ -159,6 +161,7 @@ const SignupModal = ({show, onHide}) => {
                                     isValid={touched.email && !errors.email}
                                     isInvalid={touched.email && errors.email}
                                     className="input-custom"
+                                    autoComplete="off"
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
                             </Form.Group>
@@ -177,6 +180,7 @@ const SignupModal = ({show, onHide}) => {
                                     isInvalid={touched.cpf && errors.cpf}
                                     className="input-custom"
                                     mask="111.111.111-11"
+                                    autoComplete="off"
                                 />
                                 </OverlayTrigger>
                                 <Form.Control.Feedback type="invalid">{errors.cpf}</Form.Control.Feedback>
@@ -193,6 +197,7 @@ const SignupModal = ({show, onHide}) => {
                                     isValid={touched.password && !errors.password}
                                     isInvalid={touched.password && errors.password}
                                     className="input-custom"
+                                    autoComplete="off"
                                 />
                                 </OverlayTrigger>
                                 <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
@@ -208,6 +213,7 @@ const SignupModal = ({show, onHide}) => {
                                     isValid={touched.confirmPassword && !errors.confirmPassword}
                                     isInvalid={touched.confirmPassword && errors.confirmPassword}
                                     className="input-custom"
+                                    autoComplete="off"
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.confirmPassword}</Form.Control.Feedback>
                             </Form.Group>
