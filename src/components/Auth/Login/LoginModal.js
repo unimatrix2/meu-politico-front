@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Modal, Button, Form, Col } from 'react-bootstrap';
 import { Formik } from 'formik';
+import MaskedInput from 'react-maskedinput';
 import * as yup from 'yup';
 
 const LoginModal = ({show, onHide}) => {
@@ -9,10 +10,12 @@ const LoginModal = ({show, onHide}) => {
 
     //schema de validação
     const schema = yup.object({
-		email: yup
+		cpf: yup
 			.string()
 			.trim()
-			.email("Digite um e-mail válido")
+            .matches(/[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}/, 'CPF inválido')
+            .min(11, 'CPF Inválido')
+            .max(14, 'CPF inválido')
 			.required("Campo obrigatório"),
 		password: yup
 			.string()
@@ -26,7 +29,7 @@ const LoginModal = ({show, onHide}) => {
 
     // estado inicial
     const initState = {
-        email: '',
+        cpf: '',
         password: ''
     };
 
@@ -69,18 +72,20 @@ const LoginModal = ({show, onHide}) => {
                     }) => (
                         <Form noValidate onSubmit={handleSubmit}>
                             <Form.Group as={Col} md="10" controlId="validationFormik03">
-                                <Form.Label>E-Mail</Form.Label>
+                                <Form.Label>CPF</Form.Label>
                                 <Form.Control
-                                    type="email"
-                                    name="email"
-                                    value={values.email}
+                                    as={MaskedInput}
+                                    type="text"
+                                    name="cpf"
+                                    value={values.cpf}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    isValid={touched.email && !errors.email && touched.password && !errors.password}
-                                    // Com a invalidação condicionada a ambos, o usuário só sabe que o email
+                                    isValid={touched.cpf && !errors.cpf && touched.password && !errors.password}
+                                    // Com a invalidação condicionada a ambos, o usuário só sabe que o cpf
                                     // é valido quando a senha também preencher os requisitos
-                                    isInvalid={(touched.email && errors.email) || (touched.password && errors.password)}
+                                    isInvalid={(touched.cpf && errors.cpf) || (touched.password && errors.password)}
                                     className="input-custom"
+                                    mask="111.111.111-11"
                                 />
                                 <Form.Control.Feedback type="invalid">E-mail ou senha Incorretos</Form.Control.Feedback>
                             </Form.Group>
@@ -92,10 +97,10 @@ const LoginModal = ({show, onHide}) => {
                                     value={values.password}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    isValid={touched.password && !errors.password && touched.email && !errors.email}
-                                    // Com a invalidação condicionada a ambos, o usuário só sabe que o email
+                                    isValid={touched.password && !errors.password && touched.cpf && !errors.cpf}
+                                    // Com a invalidação condicionada a ambos, o usuário só sabe que o cpf
                                     // é valido quando a senha também preencher os requisitos
-                                    isInvalid={(touched.password && errors.password) || (touched.email && errors.email) }
+                                    isInvalid={(touched.password && errors.password) || (touched.cpf && errors.cpf) }
                                     className="input-custom"
                                 />
                                 <Form.Control.Feedback type="invalid">E-mail ou senha Incorretos</Form.Control.Feedback>
