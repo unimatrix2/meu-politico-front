@@ -31,7 +31,7 @@ const passwordPopover = (
     </Popover>
 )
 
-const SignupModal = ({show, onHide}) => {
+const SignupModal = (props) => {
     const [isSignupSuccesfull, setIsSignupSuccesfull] = useState(false);
 
     //schema de validação
@@ -88,19 +88,39 @@ const SignupModal = ({show, onHide}) => {
     };
 
     // Método de submissão do fomrmulário
-    const handleSubmitMethod = async (values, helpers) => {
-        // Precisa realizar a requisição axios
+    const handleSubmitMethod = async (values, helperMethods) => {
+        try {
+            delete values.confirmPassword;
+            await axios.post(
+                "http://localhost:5000/api/usuario/registro",
+                values
+            );
+
+            props.setSignupState(false);
+            props.setLoginState(true);
+        } catch (error) {
+            console.log(error.response)
+            if (error.response.data && error.response.data.type === "Registro-CPF-Existe") {
+                helperMethods.setFieldError('cpf', error.response.data.message)
+            }
+            if (error.response.data && error.response.data.type === "Registro-Email-Existe") {
+                helperMethods.setFieldError('email', error.response.data.message)
+            }
+            if (error.response.data && error.response.data.type === "Registro-Usuario-Existe") {
+                helperMethods.setFieldError('email', error.response.data.message)
+                helperMethods.setFieldError('cpf', error.response.data.message)
+            }
+        }
        console.log(values);
        // Precisa dar feedback ao usuário
        // Depois de um ou dois segundos, precisa
        // alterar o estado do App.js para fechar o modal
        // e por último abrir o modal de login
     }
-
     return (
         <Modal
-            show={show}
-            onHide={onHide}
+            show={props.show}
+            onHide={props.onHide}
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
@@ -223,7 +243,7 @@ const SignupModal = ({show, onHide}) => {
                             </Form.Group>
                             <Modal.Footer className="modal-footer">
                                 <Button type="submit" className="btn btn-lg modal-btn-custom-login">Criar Conta</Button>
-                                <Button onClick={onHide} className="btn btn-lg modal-btn-custom-close">Fechar</Button>
+                                <Button onClick={props.onHide} className="btn btn-lg modal-btn-custom-close">Fechar</Button>
                             </Modal.Footer>
                         </Form>
                     )}
