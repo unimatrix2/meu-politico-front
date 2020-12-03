@@ -44,7 +44,11 @@ const NavigationBar = ({
                 </Nav.Item>
             </Nav>
             </Navbar.Collapse>}
-            <SignupModal show={showSignup} onHide={() => setShowSignup(false)} />
+            <SignupModal
+                show={showSignup}
+                onHide={() => setShowSignup(false)}
+                setSignupState={setShowSignup}
+                setLoginState={setShowLogin} />
             <LoginModal show={showLogin} onHide={() => setShowLogin(false)} />
         </Navbar>
     )
