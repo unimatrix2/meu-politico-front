@@ -96,8 +96,10 @@ const SignupModal = (props) => {
                 values
             );
 
+            alert('Registrado com sucesso!')
             props.setSignupState(false);
             props.setLoginState(true);
+
         } catch (error) {
             console.log(error.response)
             if (error.response.data && error.response.data.type === "Registro-CPF-Existe") {
@@ -111,11 +113,6 @@ const SignupModal = (props) => {
                 helperMethods.setFieldError('cpf', error.response.data.message)
             }
         }
-       console.log(values);
-       // Precisa dar feedback ao usuário
-       // Depois de um ou dois segundos, precisa
-       // alterar o estado do App.js para fechar o modal
-       // e por último abrir o modal de login
     }
     return (
         <Modal
