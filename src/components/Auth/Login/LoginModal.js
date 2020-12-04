@@ -4,9 +4,9 @@ import { Modal, Button, Form, Col } from 'react-bootstrap';
 import { Formik } from 'formik';
 import MaskedInput from 'react-maskedinput';
 import * as yup from 'yup';
+import { set as localSet } from '../../../utils/localStorage.utils';
 
-const LoginModal = ({show, onHide}) => {
-    const [loginSuccesfull, setIsLoginSuccesfull] = useState(false);
+const LoginModal = ({show, onHide, setAuthState}) => {
 
     //schema de validação
     const schema = yup.object({
@@ -34,9 +34,21 @@ const LoginModal = ({show, onHide}) => {
     };
 
     // Método de submissão do formulário
-    const handleSubmitMethod = async (values, helpers) => {
-        // Necessita das rotas prontas para concluir
-        console.log(values)
+    const handleSubmitMethod = async (values, helperMethods) => {
+        try {
+            await axios.post("http://localhost:5000/api/usuario/acesso",
+            values
+            ).then(data => {
+                localSet(data.data);
+            })
+            onHide()
+            setAuthState(true)
+        } catch (error) {
+            if (error.response.data && error.response.data.type === "Acesso-Credencial-Invalida") {
+                helperMethods.setFieldError('cpf', error.response.data.message);
+                helperMethods.setFieldError('password', error.response.data.message)
+            }
+        }
         // Precisa fazer a requisição axios
         // Dar feedback ao usuário
         // Criar o token

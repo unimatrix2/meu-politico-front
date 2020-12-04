@@ -95,13 +95,12 @@ const SignupModal = (props) => {
                 "http://localhost:5000/api/usuario/registro",
                 values
             );
-
+            // Mudar esse alert para o componente de mensagem do bootstrap com setTimeout
             alert('Registrado com sucesso!')
             props.setSignupState(false);
             props.setLoginState(true);
 
         } catch (error) {
-            console.log(error.response)
             if (error.response.data && error.response.data.type === "Registro-CPF-Existe") {
                 helperMethods.setFieldError('cpf', error.response.data.message)
             }
