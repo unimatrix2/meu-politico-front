@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, NavDropdown, Button} from 'react-bootstrap';
 import SignupModal from '../Auth/Signup/SignupModal';
 import LoginModal from '../Auth/Login/LoginModal';
+import { remove } from '../../utils/localStorage.utils';
 import './Navbar.css';
 
 const NavigationBar = ({
@@ -33,7 +34,7 @@ const NavigationBar = ({
                         <NavDropdown.Item href="#action/3.2">Minhas Notícias</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.3">Minha Conta</NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">Sair</NavDropdown.Item>
+                        <NavDropdown.Item onClick={() => {remove(); setAuthState(false);}} >Sair</NavDropdown.Item>
                     </NavDropdown>
                 </Navbar.Collapse>
                 : <Navbar.Collapse className="flex-row justify-content-end">
