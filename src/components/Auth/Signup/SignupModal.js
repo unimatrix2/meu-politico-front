@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { Modal, Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
 import { Formik } from 'formik';
@@ -32,8 +32,6 @@ const passwordPopover = (
 )
 
 const SignupModal = (props) => {
-    const [isSignupSuccesfull, setIsSignupSuccesfull] = useState(false);
-
     //schema de validação
     const schema = yup.object({
 		firstName: yup
