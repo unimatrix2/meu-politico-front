@@ -26,13 +26,10 @@ const NavigationBar = ({
                     </Nav>
                 </Navbar.Collapse>
                 {authState ? <Navbar.Collapse className="justify-content-end">
-                    <Navbar.Text>
-                        Signed in as:
-                    </Navbar.Text>
-                    <NavDropdown title={currentUser ? currentUser : 'default'} id="basic-nav-dropdown custom-dropdown">
-                        <NavDropdown.Item href="#action/3.1">Meus Políticos</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Minhas Notícias</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">Minha Conta</NavDropdown.Item>
+                    <NavDropdown title={currentUser ? currentUser : 'default'} alignRight >
+                        <NavDropdown.Item as={Link} to="/privado/usuario/politicos">Meus Políticos</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to="/privado/usuario/noticias">Minhas Notícias</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to="/privado/usuario/conta">Minha Conta</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item onClick={() => {remove(); setAuthState(false);}} >Sair</NavDropdown.Item>
                     </NavDropdown>
