@@ -44,7 +44,7 @@ const NavigationBar = ({
                         </Nav.Item>
                     </Nav>
                 </Navbar.Collapse>}
-                <SignupModal
+                {!authState ? <><SignupModal
                     show={showSignup}
                     onHide={() => setShowSignup(false)}
                     setSignupState={setShowSignup}
@@ -54,7 +54,7 @@ const NavigationBar = ({
                     show={showLogin}
                     onHide={() => setShowLogin(false)}
                     setAuthState={setAuthState}
-                />
+                /> </> : false}
         </Navbar>
     )
 }
