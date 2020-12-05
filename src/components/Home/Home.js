@@ -4,7 +4,7 @@ import { Jumbotron, Button, Container } from 'react-bootstrap';
 import Footer from '../Footer/Footer';
 import './Home.css';
 
-const Home = ({showSignup, setShowSignup}) => {
+const Home = ({showSignup, setShowSignup, authState}) => {
     return (
         <>
             <main className="main-home-content">
@@ -22,14 +22,18 @@ const Home = ({showSignup, setShowSignup}) => {
                 </Jumbotron>
                 <Jumbotron className="cambridge-blue-background d-flex flex-column shadow align-items-center w-50 justify-content-center align-self-center participate">
                         <p className="h1 mb-3">Participe!</p>
-                        <Container className="d-flex justify-content-between w-50">
+                        {authState ? <Container className="w-50 d-flex justify-content-center">
+                            <Button as={Link} to="/" className="btn btn-lg button-ultra-red">
+                                Seja um voluntário
+                            </Button>
+                        </Container> : <Container className="d-flex justify-content-between w-50">
                             <Button as={Link} to="/" className="btn btn-lg button-ultra-red">
                                 Seja um voluntário
                             </Button>
                             <Button onClick={() => setShowSignup(true)} className="btn btn-lg button-light-blue-home" >
                                 Crie uma conta
                             </Button>
-                        </Container>
+                        </Container>}
                 </Jumbotron>
                 <br></br><br></br>
                 <p className="h5 text-center">
