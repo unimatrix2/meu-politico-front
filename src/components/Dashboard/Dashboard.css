@@ -1,0 +1,10 @@
+.dashboard-container {
+    height: calc(100vh - 56px);
+}
+
+.dashboard-table-container {
+    height: 80%;
+    width: 100%;
+    border: 1px solid black;
+
+}
