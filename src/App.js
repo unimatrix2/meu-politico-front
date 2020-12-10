@@ -2,8 +2,9 @@ import Home from './components/Home/Home';
 import { useState, useEffect } from 'react';
 import NavigationBar from './components/Navbar/Navbar';
 import About from './components/About/About';
+import Dashboard from './components/Dashboard/Dashboard';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { get, remove } from './utils/localStorage.utils';
+import { get } from './utils/localStorage.utils';
 import api from './services/api.service'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -43,6 +44,8 @@ function App() {
                 <Route exact path="/" render={() => <Home showSignup={showSignup} setShowSignup={setShowSignup} authState={isAuthed} />} />
                 <Route exact path="/sobre" render={() => <About isFaq={false} />} />
                 <Route exact path="/faq" render={() => <About isFaq={true} />} />
+                {isAuthed ? <Route exact path="/conta" render={() => <Dashboard userData={currentUser} />} /> : <Redirect to="/" />}
+                <Route exact path="/divulgacandcontas.tse.jus.br" component={() => window.location = "https://divulgacandcontas.tse.jus.br"} />
             </Switch>
         </div>
     );

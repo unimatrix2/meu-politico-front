@@ -90,7 +90,7 @@ const SignupModal = (props) => {
         try {
             delete values.confirmPassword;
             await axios.post(
-                "http://localhost:5000/api/usuario/registro",
+                `${process.env.REACT_APP_API_BASE_URL}/usuario/registro`,
                 values
             );
             // Mudar esse alert para o componente de mensagem do bootstrap com setTimeout

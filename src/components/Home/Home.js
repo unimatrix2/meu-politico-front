@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Jumbotron, Button, Container } from 'react-bootstrap';
 import Footer from '../Footer/Footer';
