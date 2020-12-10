@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Modal, Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
 import { Formik } from 'formik';
@@ -7,7 +8,7 @@ import * as yup from 'yup';
 const fontPopover = (
     <Popover id="popover-basic" className="modal-body">
         <Popover.Content>
-            Nossa fonte preferida é o <a href="divulgacandcontas.tse.jus.br" target="_blank">divulgacandcontas.tse.jus.br</a>
+            Nossa fonte preferida é o <Link to="/divulgacandcontas.tse.jus.br" target="_blank">divulgacandcontas.tse.jus.br</Link>
         </Popover.Content>
     </Popover>
 )
@@ -15,41 +16,43 @@ const fontPopover = (
 const imagePopover = (
     <Popover id="popover-basic" className="modal-body">
         <Popover.Content>
-            Na página do político disponível no <a href="divulgacandcontas.tse.jus.br" target="_blank">divulgacandcontas.tse.jus.br</a>,
-            clique com o botão diretio do cursor em "copiar endereço da imagem" e cole aqui.
+            Na página do político disponível no <Link to="/divulgacandcontas.tse.jus.br" target="_blank">divulgacandcontas.tse.jus.br</Link>,
+            clique com o botão direito na imagem, em seguida "copiar endereço da imagem" e cole aqui.
         </Popover.Content>
     </Popover>
 )
-
 const CreatePolitico = (props) => {
     //schema de validação
     const schema = yup.object({
 		fullName: yup
+            .string()
             .trim()
-			.string()
 			.matches(/^[A-Z]/, "Primeira letra maiúscula")
 			.min(3, "Mínimo de 3 caracteres")
 			.max(50, "Máximo de 50 caracteres")
             .required("Campo obrigatório"),
         currentPosition: yup
-            .oneOf(['Candidato', 'Vereador', 'Prefeito', 'Dep. Estadual', 'Governador', 'Dep. Federal', 'Senador', 'Presidente', 'Cargo Indireto', false])
-            .required(),
+            .mixed()
+            .oneOf(['Candidato', 'Vereador', 'Prefeito', 'Dep. Estadual', 'Governador', 'Dep. Federal', 'Senador', 'Presidente', 'Cargo Indireto', 'Outro/Não Sei'])
+            .required("Campo obrigatório"),
         lastPosition: yup
-            .oneOf(['Candidato', 'Vereador', 'Prefeito', 'Dep. Estadual', 'Governador', 'Dep. Federal', 'Senador', 'Presidente', 'Cargo Indireto', false])
-            .required(),
+            .mixed()
+            .oneOf(['Candidato', 'Vereador', 'Prefeito', 'Dep. Estadual', 'Governador', 'Dep. Federal', 'Senador', 'Presidente', 'Cargo Indireto', 'Outro/Não Sei'])
+            .required("Campo obrigatório"),
         province: yup
+            .mixed()
             .oneOf(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA',
             'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN',
             'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'])
-            .required(),
+            .required("Campo obrigatório"),
         officialInfoURL: yup
-            .trim()
             .string()
+            .trim()
             .matches(/((https?):\/\/)?(www.)?[a-z0-9-]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#-]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/, "Insira uma URL válida"),
         imageURL: yup
-            .trim()
             .string()
-            .required(),
+            .trim()
+            .required("Campo obrigatório"),
         status: yup.string().required()
 
             
@@ -92,7 +95,7 @@ const CreatePolitico = (props) => {
         >
             <Modal.Header closeButton className="modal-header">
                 <Modal.Title id="contained-modal-title-vcenter" className="text-center">
-                    Crie uma conta
+                    Criar um Político
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="modal-body">
@@ -127,6 +130,7 @@ const CreatePolitico = (props) => {
                             <Form.Group as={Col} md="10" controlId="validationFormik03">
                                 <Form.Label>Estado</Form.Label>
                                 <Form.Control
+                                    as="select"
                                     type="select"
                                     name="province"
                                     value={values.province}
@@ -136,6 +140,7 @@ const CreatePolitico = (props) => {
                                     isInvalid={touched.province && errors.province}
                                     className="input-custom"
                                     autoComplete="off"
+                                    placeholder="Estado do Político"
                                 >
                                     <option>AC</option>
                                     <option>AL</option>
@@ -170,6 +175,7 @@ const CreatePolitico = (props) => {
                             <Form.Group as={Col} md="10" controlId="validationFormik02">
                                 <Form.Label>Cargo Atual</Form.Label>
                                 <Form.Control
+                                    as="select"
                                     type="select"
                                     name="currentPosition"
                                     value={values.currentPosition}
@@ -196,6 +202,7 @@ const CreatePolitico = (props) => {
                             <Form.Group as={Col} md="10" controlId="validationFormik03">
                                 <Form.Label>Último Cargo</Form.Label>
                                 <Form.Control
+                                    as="select"
                                     type="select"
                                     name="lastPosition"
                                     value={values.lastPosition}
@@ -237,7 +244,7 @@ const CreatePolitico = (props) => {
                                 <Form.Control.Feedback type="invalid">{errors.officialInfoURL}</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="10" controlId="validationFormik05">
-                                <Form.Label>Imagem do Político</Form.Label>
+                                <Form.Label>URL de Imagem do Político</Form.Label>
                                 <OverlayTrigger trigger="focus" placement="right" overlay={imagePopover}>
                                 <Form.Control
                                     type="text"
