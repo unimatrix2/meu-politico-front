@@ -45,6 +45,7 @@ function App() {
                 <Route exact path="/sobre" render={() => <About isFaq={false} />} />
                 <Route exact path="/faq" render={() => <About isFaq={true} />} />
                 {isAuthed ? <Route exact path="/conta" render={() => <Dashboard userData={currentUser} />} /> : <Redirect to="/" />}
+                <Route exact path="/divulgacandcontas.tse.jus.br" component={() => window.location = "https://divulgacandcontas.tse.jus.br"} />
             </Switch>
         </div>
     );
