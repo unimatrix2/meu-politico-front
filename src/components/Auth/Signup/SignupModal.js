@@ -102,6 +102,9 @@ const SignupModal = (props) => {
             if (error.response.data && error.response.data.type === "Registro-CPF-Existe") {
                 helperMethods.setFieldError('cpf', error.response.data.message)
             }
+            if (error.response.data && error.response.data.type === "Registro-CPF-Invalido") {
+                helperMethods.setFieldError('cpf', error.response.data.message)
+            }
             if (error.response.data && error.response.data.type === "Registro-Email-Existe") {
                 helperMethods.setFieldError('email', error.response.data.message)
             }
