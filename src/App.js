@@ -25,7 +25,7 @@ function App() {
                     })
                 )
                 .catch(() => setIsAuthed(false));
-    }) : () => {setRequested(true); return false });
+    }) : () => { setRequested(true); return false });
     useEffect(() => {
         if (!currentUser && requested) {
             api.get(`${process.env.REACT_APP_API_BASE_URL}/usuario/token`)
