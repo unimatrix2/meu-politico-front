@@ -74,6 +74,8 @@ const CreatePolitico = (props) => {
                 `${process.env.REACT_APP_API_BASE_URL}/politicos/privado/criar`,
                 values
             );
+            alert('Político criado com sucesso!');
+            props.onHide();
             // Mudar esse alert para o componente de mensagem do bootstrap com setTimeout
 
         } catch (error) {
