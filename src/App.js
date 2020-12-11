@@ -12,9 +12,22 @@ function App() {
     const [showSignup, setShowSignup] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
     const [isAuthed, setIsAuthed] = useState(get() ? true : false);
-    const [currentUser, setCurrentUser] = useState({});
+    const [requested, setRequested] = useState(false)
+    const [currentUser, setCurrentUser] = useState(isAuthed && !requested ? (() => {
+        api.get(`${process.env.REACT_APP_API_BASE_URL}/usuario/token`)
+                .then(data => setCurrentUser({
+                        firstName: data.data.firstName,
+                        lastName: data.data.lastName,
+                        email: data.data.email,
+                        cpf: data.data.cpf,
+                        imageURL: data.data.imageURL,
+                        role: data.data.role,
+                    })
+                )
+                .catch(() => setIsAuthed(false));
+    }) : () => {setRequested(true); return false });
     useEffect(() => {
-        if (isAuthed) {
+        if (!currentUser && requested) {
             api.get(`${process.env.REACT_APP_API_BASE_URL}/usuario/token`)
                 .then(data => setCurrentUser({
                         firstName: data.data.firstName,
@@ -27,7 +40,7 @@ function App() {
                 )
                 .catch(() => setIsAuthed(false));
         }
-    }, [isAuthed])
+    }, [isAuthed, currentUser, requested])
     return (
         <div className="App" style={{backgroundColor: "var(--honeydew)"}}>
             <NavigationBar
@@ -37,7 +50,7 @@ function App() {
             setShowSignup={setShowSignup}
             showLogin={showLogin}
             setShowLogin={setShowLogin}
-            currentUser={`${currentUser.firstName} ${currentUser.lastName}`}
+            currentUser={currentUser ? `${currentUser.firstName} ${currentUser.lastName}` : false}
             />
 
             <Switch>
