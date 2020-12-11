@@ -38,22 +38,23 @@ const CreateNoticia = (props) => {
             .max(1000, "Máximo de 1000 caracteres")
             .required("Campo obrigatório"),
         category: yup
-            .mixed()
+            .string()
             .oneOf(['Positiva', 'Negativa', 'Corrupção', 'Promessa Cumprida', 'Promessa Descumprida'])
             .required("Campo obrigatório"),
         sources: yup
             .string()
-            .trim(),
+            .trim()
+            .required("Campo obrigatório"),
         politicos: yup
-            .string()
-            .trim(),
-        imageURL: yup
             .string()
             .trim()
             .required("Campo obrigatório"),
-        status: yup.string().required()
-
-            
+        imageURL: yup
+            .string()
+            .trim()
+            .matches(/((https?):\/\/)?(www.)?[a-z0-9-]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#-]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/, "Insira uma URL válida")
+            .required("Campo obrigatório"),
+        status: yup.string().required("Campo obrigatório"),           
 	});
     // estado inicial para o Formik
     const initState = {
@@ -67,7 +68,8 @@ const CreateNoticia = (props) => {
 
     // Método de submissão do fomrmulário
     const handleSubmitMethod = async (values, helperMethods) => {
-        try {
+        console.log(values);
+        /* try {
             await api.post(
                 `${process.env.REACT_APP_API_BASE_URL}/noticias/privado/criar`,
                 values
@@ -79,7 +81,7 @@ const CreateNoticia = (props) => {
                 helperMethods.setFieldError('politicos', error.response.data.message);
                 // Falta tratar mais erros
             }
-        }
+        } */
     }
     return (
         <Modal
@@ -108,7 +110,7 @@ const CreateNoticia = (props) => {
                         errors,
                     }) => (
                         <Form noValidate onSubmit={handleSubmit}>
-                            <Form.Group as={Col} md="10" controlId="validationFormik01">
+                            <Form.Group as={Col} md="10" controlId="validationFormik16">
                                 <Form.Label>Nome Completo do(s) Político(s)</Form.Label>
                                 <OverlayTrigger trigger="focus" placement="right" overlay={politicosPopover}>
                                     <Form.Control
@@ -124,7 +126,7 @@ const CreateNoticia = (props) => {
                                 </OverlayTrigger>
                                 <Form.Control.Feedback type="invalid">{errors.politicos}</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik03">
+                            <Form.Group as={Col} md="10" controlId="validationFormik17">
                                 <Form.Label>Manchete</Form.Label>
                                 <Form.Control
                                     type="text"
@@ -138,10 +140,10 @@ const CreateNoticia = (props) => {
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.headline}</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik02">
+                            <Form.Group as={Col} md="10" controlId="validationFormik18">
                                 <Form.Label>Breve Introdução</Form.Label>
                                 <Form.Control
-                                    type="textarea"
+                                    as="textarea"
                                     name="introduction"
                                     value={values.introduction}
                                     onChange={handleChange}
@@ -152,11 +154,10 @@ const CreateNoticia = (props) => {
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.introduction}</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik03">
+                            <Form.Group as={Col} md="10" controlId="validationFormik19">
                                 <Form.Label>Categoria</Form.Label>
                                 <Form.Control
                                     as="select"
-                                    type="select"
                                     name="category"
                                     value={values.category}
                                     onChange={handleChange}
@@ -174,11 +175,11 @@ const CreateNoticia = (props) => {
                                 </Form.Control>
                                 <Form.Control.Feedback type="invalid">{errors.category}</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik04">
+                            <Form.Group as={Col} md="10" controlId="validationFormik20">
                                 <Form.Label>Fontes</Form.Label>
                                 <OverlayTrigger trigger="focus" placement="right" overlay={sourcesPopover}>
                                     <Form.Control
-                                        type="textarea"
+                                        as="textarea"
                                         name="sources"
                                         value={values.sources}
                                         onChange={handleChange}
@@ -191,7 +192,7 @@ const CreateNoticia = (props) => {
                                 </OverlayTrigger>
                                 <Form.Control.Feedback type="invalid">{errors.sources}</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik06">
+                            <Form.Group as={Col} md="10" controlId="validationFormik21">
                                 <Form.Label>Status</Form.Label>
                                 <Form.Control
                                     disabled
