@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import api from '../../services/api.service';
 import { Modal, Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -68,7 +68,7 @@ const CreateNoticia = (props) => {
     // Método de submissão do fomrmulário
     const handleSubmitMethod = async (values, helperMethods) => {
         try {
-            await axios.post(
+            await api.post(
                 `${process.env.REACT_APP_API_BASE_URL}/noticias/privado/criar`,
                 values
             );

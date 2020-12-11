@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../services/api.service';
 import { Modal, Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -70,7 +70,7 @@ const CreatePolitico = (props) => {
     // Método de submissão do fomrmulário
     const handleSubmitMethod = async (values, helperMethods) => {
         try {
-            await axios.post(
+            await api.post(
                 `${process.env.REACT_APP_API_BASE_URL}/politicos/privado/criar`,
                 values
             );
