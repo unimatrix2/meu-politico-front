@@ -201,7 +201,6 @@ const CreateNoticia = (props) => {
                                     className="input-custom"
                                     autoComplete="off"
                                 />
-                                {console.log(errors)}
                                 <Form.Control.Feedback type="invalid">{errors.status}</Form.Control.Feedback>
                             </Form.Group>
                             <Modal.Footer className="modal-footer">
