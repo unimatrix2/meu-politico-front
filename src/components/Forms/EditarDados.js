@@ -69,10 +69,10 @@ const EditarDados = (props) => {
 	});
 	// estado inicial para o Formik
 	const initState = {
-		firstName: props.userData.firstName,
-		lastName: props.userData.lastName,
-		email: props.userData.email,
-		cpf: props.userData.cpf,
+		firstName: props.userData ? props.userData.firstName : '',
+		lastName: props.userData ? props.userData.lastName : '',
+		email: props.userData ? props.userData.email : '',
+		cpf: props.userData ? props.userData.cpf : '',
 		password: "",
 	};
 
@@ -87,9 +87,6 @@ const EditarDados = (props) => {
 			);
 			// Mudar esse alert para o componente de mensagem do bootstrap com setTimeout
 			alert("Dados atualizados com sucesso!");
-			// Usar os estados corretos
-			/* props.setSignupState(false);
-            props.setLoginState(true); */
 		} catch (error) {
 			if (
 				error.response.data &&
