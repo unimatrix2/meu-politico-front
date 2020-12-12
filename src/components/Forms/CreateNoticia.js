@@ -63,20 +63,20 @@ const CreateNoticia = (props) => {
 
     // Método de submissão do fomrmulário
     const handleSubmitMethod = async (values, helperMethods) => {
-        console.log(values);
-        /* try {
+        try {
             await api.post(
                 `${process.env.REACT_APP_API_BASE_URL}/noticias/privado/criar`,
                 values
             );
-            // Mudar esse alert para o componente de mensagem do bootstrap com setTimeout
+            alert('Notícia criada com sucesso!')
+            props.onHide();
 
         } catch (error) {
             if (error.response.data && error.response.data.type === "Politico-Nao-Existe") {
                 helperMethods.setFieldError('politicos', error.response.data.message);
                 // Falta tratar mais erros
             }
-        } */
+        }
     }
     return (
         <Modal
