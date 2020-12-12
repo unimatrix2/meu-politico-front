@@ -49,11 +49,6 @@ const CreateNoticia = (props) => {
             .string()
             .trim()
             .required("Campo obrigatório"),
-        imageURL: yup
-            .string()
-            .trim()
-            .matches(/((https?):\/\/)?(www.)?[a-z0-9-]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#-]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/, "Insira uma URL válida")
-            .required("Campo obrigatório"),
         status: yup.string().required("Campo obrigatório"),           
 	});
     // estado inicial para o Formik
@@ -206,6 +201,7 @@ const CreateNoticia = (props) => {
                                     className="input-custom"
                                     autoComplete="off"
                                 />
+                                {console.log(errors)}
                                 <Form.Control.Feedback type="invalid">{errors.status}</Form.Control.Feedback>
                             </Form.Group>
                             <Modal.Footer className="modal-footer">
