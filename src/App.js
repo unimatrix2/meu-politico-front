@@ -3,31 +3,31 @@ import { useState, useEffect } from 'react';
 import NavigationBar from './components/Navbar/Navbar';
 import About from './components/About/About';
 import Dashboard from './components/Dashboard/Dashboard';
+import PoliticoTable from './components/Tables/PoliticoTable/Politicotable';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { get } from './utils/localStorage.utils';
-import api from './services/api.service'
+import { get, remove } from './utils/localStorage.utils';
+import api from './services/api.service';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
     const [showSignup, setShowSignup] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
     const [isAuthed, setIsAuthed] = useState(get() ? true : false);
-    const [currentUser, setCurrentUser] = useState({});
+    const [requested, setRequested] = useState(false)
+    const [currentUser, setCurrentUser] = useState(isAuthed && !requested ? (() => {
+        api.get(`${process.env.REACT_APP_API_BASE_URL}/usuario/token`)
+                .then(data => {
+                    setCurrentUser(data.data);
+                })
+                .catch(() => { setRequested(true); return false })
+    }) : () => { setRequested(true); return false });
     useEffect(() => {
-        if (isAuthed) {
+        if (!currentUser && requested && isAuthed) {
             api.get(`${process.env.REACT_APP_API_BASE_URL}/usuario/token`)
-                .then(data => setCurrentUser({
-                        firstName: data.data.firstName,
-                        lastName: data.data.lastName,
-                        email: data.data.email,
-                        cpf: data.data.cpf,
-                        imageURL: data.data.imageURL,
-                        role: data.data.role,
-                    })
-                )
-                .catch(() => setIsAuthed(false));
+            .then(data => setCurrentUser(data.data))
+            .catch(() => { setIsAuthed(false); remove(); });
         }
-    }, [isAuthed])
+    }, [isAuthed, currentUser, requested])
     return (
         <div className="App" style={{backgroundColor: "var(--honeydew)"}}>
             <NavigationBar
@@ -37,7 +37,7 @@ function App() {
             setShowSignup={setShowSignup}
             showLogin={showLogin}
             setShowLogin={setShowLogin}
-            currentUser={`${currentUser.firstName} ${currentUser.lastName}`}
+            currentUser={currentUser ? `${currentUser.firstName} ${currentUser.lastName}` : false}
             />
 
             <Switch>
@@ -45,6 +45,7 @@ function App() {
                 <Route exact path="/sobre" render={() => <About isFaq={false} />} />
                 <Route exact path="/faq" render={() => <About isFaq={true} />} />
                 {isAuthed ? <Route exact path="/conta" render={() => <Dashboard userData={currentUser} />} /> : <Redirect to="/" />}
+                {isAuthed ? <Route path="/politicos" component={PoliticoTable} /> : <Redirect to="/" /> }
                 <Route exact path="/divulgacandcontas.tse.jus.br" component={() => window.location = "https://divulgacandcontas.tse.jus.br"} />
             </Switch>
         </div>

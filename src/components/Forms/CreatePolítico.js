@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../services/api.service';
-import { Modal, Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
+import { Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -23,6 +23,7 @@ const imagePopover = (
 )
 const CreatePolitico = (props) => {
     //schema de validação
+    const urlRegex = /((https?):\/\/)?(www.)?[a-z0-9-]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#-]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
     const schema = yup.object({
 		fullName: yup
             .string()
@@ -48,10 +49,12 @@ const CreatePolitico = (props) => {
         officialInfoURL: yup
             .string()
             .trim()
-            .matches(/((https?):\/\/)?(www.)?[a-z0-9-]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#-]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/, "Insira uma URL válida"),
+            .matches(urlRegex, "Insira uma URL válida")
+            .required("Campo obrigatório"),
         imageURL: yup
             .string()
             .trim()
+            .matches(urlRegex, "Insira uma URL válida")
             .required("Campo obrigatório"),
         status: yup.string().required()
 
@@ -74,6 +77,8 @@ const CreatePolitico = (props) => {
                 `${process.env.REACT_APP_API_BASE_URL}/politicos/privado/criar`,
                 values
             );
+            alert('Político criado com sucesso!');
+            props.onHide();
             // Mudar esse alert para o componente de mensagem do bootstrap com setTimeout
 
         } catch (error) {
@@ -87,18 +92,6 @@ const CreatePolitico = (props) => {
         }
     }
     return (
-        <Modal
-            show={props.show}
-            onHide={props.onHide}
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-        >
-            <Modal.Header closeButton className="modal-header">
-                <Modal.Title id="contained-modal-title-vcenter" className="text-center">
-                    Criar um Político
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body className="modal-body">
                 <Formik
                     initialValues={initState}
                     onSubmit={handleSubmitMethod}
@@ -112,8 +105,8 @@ const CreatePolitico = (props) => {
                         touched,
                         errors,
                     }) => (
-                        <Form noValidate onSubmit={handleSubmit}>
-                            <Form.Group as={Col} md="10" controlId="validationFormik01">
+                        <Form noValidate onSubmit={handleSubmit} className="d-flex flex-column align-items-center mt-5">
+                            <Form.Group as={Col} md="10" controlId="validationFormik09">
                                 <Form.Label>Nome Completo</Form.Label>
                                 <Form.Control
                                     type="text"
@@ -127,7 +120,7 @@ const CreatePolitico = (props) => {
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.fullName}</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik03">
+                            <Form.Group as={Col} md="10" controlId="validationFormik10">
                                 <Form.Label>Estado</Form.Label>
                                 <Form.Control
                                     as="select"
@@ -172,7 +165,7 @@ const CreatePolitico = (props) => {
                                 </Form.Control>
                                 <Form.Control.Feedback type="invalid">{errors.province}</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik02">
+                            <Form.Group as={Col} md="10" controlId="validationFormik11">
                                 <Form.Label>Cargo Atual</Form.Label>
                                 <Form.Control
                                     as="select"
@@ -199,7 +192,7 @@ const CreatePolitico = (props) => {
                                 </Form.Control>
                                 <Form.Control.Feedback type="invalid">{errors.currentPosition}</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik03">
+                            <Form.Group as={Col} md="10" controlId="validationFormik12">
                                 <Form.Label>Último Cargo</Form.Label>
                                 <Form.Control
                                     as="select"
@@ -226,7 +219,7 @@ const CreatePolitico = (props) => {
                                 </Form.Control>
                                 <Form.Control.Feedback type="invalid">{errors.lastPosition}</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik04">
+                            <Form.Group as={Col} md="10" controlId="validationFormik13">
                                 <Form.Label>Fonte Oficial</Form.Label>
                                 <OverlayTrigger trigger="focus" placement="right" overlay={fontPopover}>
                                 <Form.Control
@@ -243,7 +236,7 @@ const CreatePolitico = (props) => {
                                 </OverlayTrigger>
                                 <Form.Control.Feedback type="invalid">{errors.officialInfoURL}</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik05">
+                            <Form.Group as={Col} md="10" controlId="validationFormik14">
                                 <Form.Label>URL de Imagem do Político</Form.Label>
                                 <OverlayTrigger trigger="focus" placement="right" overlay={imagePopover}>
                                 <Form.Control
@@ -260,7 +253,7 @@ const CreatePolitico = (props) => {
                                 </OverlayTrigger>
                                 <Form.Control.Feedback type="invalid">{errors.imageURL}</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik06">
+                            <Form.Group as={Col} md="10" controlId="validationFormik15">
                                 <Form.Label>Status</Form.Label>
                                 <Form.Control
                                     disabled
@@ -276,15 +269,10 @@ const CreatePolitico = (props) => {
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.status}</Form.Control.Feedback>
                             </Form.Group>
-                            <Modal.Footer className="modal-footer">
-                                <Button type="submit" className="btn btn-lg modal-btn-custom-login">Criar Político</Button>
-                                <Button onClick={props.onHide} className="btn btn-lg modal-btn-custom-close">Fechar</Button>
-                            </Modal.Footer>
+                                <Button type="submit" className="btn btn-lg modal-btn-custom-login submit-button-position">Criar Político</Button>
                         </Form>
                     )}
                 </Formik>
-            </Modal.Body>
-        </Modal>
     )
 }
 

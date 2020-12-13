@@ -1,6 +1,6 @@
 import React from 'react';
 import api from '../../services/api.service';
-import { Modal, Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
+import { Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -35,25 +35,21 @@ const CreateNoticia = (props) => {
             .string()
             .trim()
             .min(50, "Mínimo de 50 caracteres")
-            .max(1000, "Máximo de 1000 caracteres")
+            .max(300, "Máximo de 300 caracteres")
             .required("Campo obrigatório"),
         category: yup
-            .mixed()
+            .string()
             .oneOf(['Positiva', 'Negativa', 'Corrupção', 'Promessa Cumprida', 'Promessa Descumprida'])
             .required("Campo obrigatório"),
         sources: yup
             .string()
-            .trim(),
+            .trim()
+            .required("Campo obrigatório"),
         politicos: yup
-            .string()
-            .trim(),
-        imageURL: yup
             .string()
             .trim()
             .required("Campo obrigatório"),
-        status: yup.string().required()
-
-            
+        status: yup.string().required("Campo obrigatório"),           
 	});
     // estado inicial para o Formik
     const initState = {
@@ -72,7 +68,8 @@ const CreateNoticia = (props) => {
                 `${process.env.REACT_APP_API_BASE_URL}/noticias/privado/criar`,
                 values
             );
-            // Mudar esse alert para o componente de mensagem do bootstrap com setTimeout
+            alert('Notícia criada com sucesso!')
+            props.onHide();
 
         } catch (error) {
             if (error.response.data && error.response.data.type === "Politico-Nao-Existe") {
@@ -82,18 +79,6 @@ const CreateNoticia = (props) => {
         }
     }
     return (
-        <Modal
-            show={props.show}
-            onHide={props.onHide}
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-        >
-            <Modal.Header closeButton className="modal-header">
-                <Modal.Title id="contained-modal-title-vcenter" className="text-center">
-                    Criar uma Notícia
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body className="modal-body">
                 <Formik
                     initialValues={initState}
                     onSubmit={handleSubmitMethod}
@@ -107,8 +92,8 @@ const CreateNoticia = (props) => {
                         touched,
                         errors,
                     }) => (
-                        <Form noValidate onSubmit={handleSubmit}>
-                            <Form.Group as={Col} md="10" controlId="validationFormik01">
+                        <Form noValidate onSubmit={handleSubmit} className="d-flex flex-column align-items-center mt-5 form-container">
+                            <Form.Group as={Col} md="10" controlId="validationFormik16">
                                 <Form.Label>Nome Completo do(s) Político(s)</Form.Label>
                                 <OverlayTrigger trigger="focus" placement="right" overlay={politicosPopover}>
                                     <Form.Control
@@ -124,7 +109,7 @@ const CreateNoticia = (props) => {
                                 </OverlayTrigger>
                                 <Form.Control.Feedback type="invalid">{errors.politicos}</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik03">
+                            <Form.Group as={Col} md="10" controlId="validationFormik17">
                                 <Form.Label>Manchete</Form.Label>
                                 <Form.Control
                                     type="text"
@@ -138,10 +123,13 @@ const CreateNoticia = (props) => {
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.headline}</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik02">
+                            <Form.Group as={Col} md="10" controlId="validationFormik18">
                                 <Form.Label>Breve Introdução</Form.Label>
                                 <Form.Control
-                                    type="textarea"
+                                    style={{maxHeight: 133}}
+                                    as="textarea"
+                                    maxLength="300"
+                                    rows="3"
                                     name="introduction"
                                     value={values.introduction}
                                     onChange={handleChange}
@@ -152,11 +140,10 @@ const CreateNoticia = (props) => {
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.introduction}</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik03">
+                            <Form.Group as={Col} md="10" controlId="validationFormik19">
                                 <Form.Label>Categoria</Form.Label>
                                 <Form.Control
                                     as="select"
-                                    type="select"
                                     name="category"
                                     value={values.category}
                                     onChange={handleChange}
@@ -174,11 +161,14 @@ const CreateNoticia = (props) => {
                                 </Form.Control>
                                 <Form.Control.Feedback type="invalid">{errors.category}</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik04">
+                            <Form.Group as={Col} md="10" controlId="validationFormik20">
                                 <Form.Label>Fontes</Form.Label>
                                 <OverlayTrigger trigger="focus" placement="right" overlay={sourcesPopover}>
                                     <Form.Control
-                                        type="textarea"
+                                        as="textarea"
+                                        style={{maxHeight: 80}}
+                                        rows="2"
+                                        maxLength="300"
                                         name="sources"
                                         value={values.sources}
                                         onChange={handleChange}
@@ -191,7 +181,7 @@ const CreateNoticia = (props) => {
                                 </OverlayTrigger>
                                 <Form.Control.Feedback type="invalid">{errors.sources}</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik06">
+                            <Form.Group as={Col} md="10" controlId="validationFormik21">
                                 <Form.Label>Status</Form.Label>
                                 <Form.Control
                                     disabled
@@ -207,15 +197,10 @@ const CreateNoticia = (props) => {
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.status}</Form.Control.Feedback>
                             </Form.Group>
-                            <Modal.Footer className="modal-footer">
-                                <Button type="submit" className="btn btn-lg modal-btn-custom-login">Criar Notícia</Button>
-                                <Button onClick={props.onHide} className="btn btn-lg modal-btn-custom-close">Fechar</Button>
-                            </Modal.Footer>
+                                <Button type="submit" className="btn btn-lg modal-btn-custom-login submit-button-position">Criar Notícia</Button>
                         </Form>
                     )}
                 </Formik>
-            </Modal.Body>
-        </Modal>
     )
 }
 

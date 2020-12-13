@@ -3,8 +3,20 @@
 }
 
 .dashboard-table-container {
-    height: 80%;
+    height: 94%;
     width: 100%;
-    border: 1px solid black;
+    background-color: var(--honeydew) !important;
 
+}
+
+.custom-column {
+    max-height: 100% !important;
+    display: flex !important;
+    align-content: space-between !important;
+
+}
+
+.submit-button-position {
+    position: absolute;
+    bottom: 2%;
 }
