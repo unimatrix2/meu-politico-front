@@ -1,6 +1,6 @@
 import React from 'react';
-import axios from 'axios';
-import { Modal, Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
+import api from '../../services/api.service';
+import {Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -69,10 +69,10 @@ const EditarDados = (props) => {
 	});
 	// estado inicial para o Formik
 	const initState = {
-		firstName: props.userData.firstName,
-		lastName: props.userData.lastName,
-		email: props.userData.email,
-		cpf: props.userData.cpf,
+		firstName: props.userData ? props.userData.firstName : '',
+		lastName: props.userData ? props.userData.lastName : '',
+		email: props.userData ? props.userData.email : '',
+		cpf: props.userData ? props.userData.cpf : '',
 		password: "",
 	};
 
@@ -81,15 +81,12 @@ const EditarDados = (props) => {
 		try {
 			delete values.confirmPassword;
 			delete values.cpf;
-			await axios.post(
+			await api.post(
 				`${process.env.REACT_APP_API_BASE_URL}/usuario/privado/atualizar`,
 				values
 			);
 			// Mudar esse alert para o componente de mensagem do bootstrap com setTimeout
 			alert("Dados atualizados com sucesso!");
-			// Usar os estados corretos
-			/* props.setSignupState(false);
-            props.setLoginState(true); */
 		} catch (error) {
 			if (
 				error.response.data &&
@@ -117,7 +114,7 @@ const EditarDados = (props) => {
 				errors,
 			}) => (
 				<Form noValidate onSubmit={handleSubmit} className="d-flex flex-column align-items-center mt-5">
-					<Form.Group as={Col} md="10" controlId="validationFormik01">
+					<Form.Group as={Col} md="10" controlId="validationFormik22">
 						<Form.Label>Nome</Form.Label>
 						<Form.Control
 							type="text"
@@ -133,7 +130,7 @@ const EditarDados = (props) => {
 							{errors.firstName}
 						</Form.Control.Feedback>
 					</Form.Group>
-					<Form.Group as={Col} md="10" controlId="validationFormik02">
+					<Form.Group as={Col} md="10" controlId="validationFormik23">
 						<Form.Label>Sobrenome</Form.Label>
 						<Form.Control
 							type="text"
@@ -149,7 +146,7 @@ const EditarDados = (props) => {
 							{errors.lastName}
 						</Form.Control.Feedback>
 					</Form.Group>
-					<Form.Group as={Col} md="10" controlId="validationFormik03">
+					<Form.Group as={Col} md="10" controlId="validationFormik24">
 						<Form.Label>E-Mail</Form.Label>
 						<Form.Control
 							type="email"
@@ -165,7 +162,7 @@ const EditarDados = (props) => {
 							{errors.email}
 						</Form.Control.Feedback>
 					</Form.Group>
-					<Form.Group as={Col} md="10" controlId="validationFormik04">
+					<Form.Group as={Col} md="10" controlId="validationFormik25">
 						<Form.Label>CPF</Form.Label>
 						<Form.Control
 							disabled
@@ -183,7 +180,7 @@ const EditarDados = (props) => {
 							{errors.cpf}
 						</Form.Control.Feedback>
 					</Form.Group>
-					<Form.Group as={Col} md="10" controlId="validationFormik05">
+					<Form.Group as={Col} md="10" controlId="validationFormik26">
 						<Form.Label>Alterar Senha</Form.Label>
 						<OverlayTrigger
 							trigger="focus"
@@ -206,7 +203,7 @@ const EditarDados = (props) => {
 							{errors.password}
 						</Form.Control.Feedback>
 					</Form.Group>
-					<Form.Group as={Col} md="10" controlId="validationFormik06">
+					<Form.Group as={Col} md="10" controlId="validationFormik27">
 						<Form.Label>Confirme sua Nova Senha</Form.Label>
 						<Form.Control
 							type="password"
@@ -231,7 +228,7 @@ const EditarDados = (props) => {
 					</Form.Group>
 						<Button
 							type="submit"
-							className="btn btn-lg modal-btn-custom-login mt-4"
+							className="btn btn-lg modal-btn-custom-login submit-button-position"
 						>
 							Atualizar Cadastro
 						</Button>

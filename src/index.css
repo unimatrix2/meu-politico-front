@@ -5,6 +5,7 @@
   --honeydew: #E2EFDE;
   --lightBlue: #B9D3D5;
   --opal: #9ABFC1;
+  background-color: var(--honeydew);
 }
 
 body {

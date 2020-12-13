@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import api from '../../../services/api.service';
 import { Modal, Button, Form, Col } from 'react-bootstrap';
 import { Formik } from 'formik';
 import MaskedInput from 'react-maskedinput';
@@ -36,7 +36,7 @@ const LoginModal = ({show, onHide, setAuthState}) => {
     // Método de submissão do formulário
     const handleSubmitMethod = async (values, helperMethods) => {
         try {
-            await axios.post("http://localhost:5000/api/usuario/acesso",
+            await api.post("http://localhost:5000/api/usuario/acesso",
             values
             ).then(data => {
                 localSet(data.data);
@@ -49,11 +49,6 @@ const LoginModal = ({show, onHide, setAuthState}) => {
                 helperMethods.setFieldError('password', error.response.data.message)
             }
         }
-        // Precisa fazer a requisição axios
-        // Dar feedback ao usuário
-        // Criar o token
-        // Fechar o modal e mudar o estado (isUserAuthed)
-        // da navbar para dar acesso as areas privadas
     }
 
     return (
@@ -83,7 +78,7 @@ const LoginModal = ({show, onHide, setAuthState}) => {
                         errors,
                     }) => (
                         <Form noValidate onSubmit={handleSubmit}>
-                            <Form.Group as={Col} md="10" controlId="validationFormik03">
+                            <Form.Group as={Col} md="10" controlId="validationFormik07">
                                 <Form.Label>CPF</Form.Label>
                                 <Form.Control
                                     as={MaskedInput}
@@ -101,7 +96,7 @@ const LoginModal = ({show, onHide, setAuthState}) => {
                                 />
                                 <Form.Control.Feedback type="invalid">E-mail ou senha Incorretos</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="10" controlId="validationFormik05">
+                            <Form.Group as={Col} md="10" controlId="validationFormik08">
                                 <Form.Label>Senha</Form.Label>
                                 <Form.Control
                                     type="password"
