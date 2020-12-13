@@ -228,7 +228,7 @@ const EditarDados = (props) => {
 					</Form.Group>
 						<Button
 							type="submit"
-							className="btn btn-lg modal-btn-custom-login mt-4"
+							className="btn btn-lg modal-btn-custom-login submit-button-position"
 						>
 							Atualizar Cadastro
 						</Button>
