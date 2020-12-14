@@ -17,7 +17,7 @@ const Home = ({showSignup, setShowSignup, authState}) => {
                         fazer com que  nos contem novas mentiras! Ou de repente… serem honestos, mas essa última proposta 
                         como diriam os políticos, é muito radical. O Meu Político é uma plataforma que chega para preencher 
                         essa lacuna, e você pode fazer parte disso! Composto completamente por voluntários, queremos 
-                        construir um “dossiê de mentiras” para os políticos do Brasil.</p>
+                        construir um “dossiê de notícias” para os políticos do Brasil.</p>
                         <Button as={Link} to="/sobre" className="mt-3 btn button-light-blue-home btn-lg">Conheça o Projeto!</Button>
                 </Jumbotron>
                 <Jumbotron className="cambridge-blue-background d-flex flex-column shadow align-items-center w-50 justify-content-center align-self-center participate">
