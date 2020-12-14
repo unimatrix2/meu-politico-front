@@ -31,8 +31,8 @@ const NavigationBar = ({
                         <Nav.Link as={NavLink} to="/noticias">Minhas Notícias</Nav.Link>
                     </Nav>
                     <NavDropdown as={NavItem} title={currentUser ? currentUser : 'default'} alignRight >
-                        <NavDropdown.Item as={Link} to="/privado/usuario/politicos">Meus Políticos</NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/privado/usuario/noticias">Minhas Notícias</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to="/politicos">Meus Políticos</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to="/noticias">Minhas Notícias</NavDropdown.Item>
                         <NavDropdown.Item as={Link} to="/conta">Minha Conta</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item onClick={() => {remove(); setAuthState(false);}} >Sair</NavDropdown.Item>
