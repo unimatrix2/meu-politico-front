@@ -1,6 +1,6 @@
 import React from 'react';
 import api from '../../services/api.service';
-import { Modal, Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
+import { Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -35,7 +35,7 @@ const CreateNoticia = (props) => {
             .string()
             .trim()
             .min(50, "Mínimo de 50 caracteres")
-            .max(1000, "Máximo de 1000 caracteres")
+            .max(300, "Máximo de 300 caracteres")
             .required("Campo obrigatório"),
         category: yup
             .string()
@@ -48,11 +48,6 @@ const CreateNoticia = (props) => {
         politicos: yup
             .string()
             .trim()
-            .required("Campo obrigatório"),
-        imageURL: yup
-            .string()
-            .trim()
-            .matches(/((https?):\/\/)?(www.)?[a-z0-9-]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#-]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/, "Insira uma URL válida")
             .required("Campo obrigatório"),
         status: yup.string().required("Campo obrigatório"),           
 	});
@@ -68,34 +63,22 @@ const CreateNoticia = (props) => {
 
     // Método de submissão do fomrmulário
     const handleSubmitMethod = async (values, helperMethods) => {
-        console.log(values);
-        /* try {
+        try {
             await api.post(
                 `${process.env.REACT_APP_API_BASE_URL}/noticias/privado/criar`,
                 values
             );
-            // Mudar esse alert para o componente de mensagem do bootstrap com setTimeout
+            alert('Notícia criada com sucesso!')
+            props.onHide();
 
         } catch (error) {
             if (error.response.data && error.response.data.type === "Politico-Nao-Existe") {
                 helperMethods.setFieldError('politicos', error.response.data.message);
                 // Falta tratar mais erros
             }
-        } */
+        }
     }
     return (
-        <Modal
-            show={props.show}
-            onHide={props.onHide}
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-        >
-            <Modal.Header closeButton className="modal-header">
-                <Modal.Title id="contained-modal-title-vcenter" className="text-center">
-                    Criar uma Notícia
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body className="modal-body">
                 <Formik
                     initialValues={initState}
                     onSubmit={handleSubmitMethod}
@@ -109,7 +92,7 @@ const CreateNoticia = (props) => {
                         touched,
                         errors,
                     }) => (
-                        <Form noValidate onSubmit={handleSubmit}>
+                        <Form noValidate onSubmit={handleSubmit} className="d-flex flex-column align-items-center mt-5 form-container">
                             <Form.Group as={Col} md="10" controlId="validationFormik16">
                                 <Form.Label>Nome Completo do(s) Político(s)</Form.Label>
                                 <OverlayTrigger trigger="focus" placement="right" overlay={politicosPopover}>
@@ -143,7 +126,10 @@ const CreateNoticia = (props) => {
                             <Form.Group as={Col} md="10" controlId="validationFormik18">
                                 <Form.Label>Breve Introdução</Form.Label>
                                 <Form.Control
+                                    style={{maxHeight: 133}}
                                     as="textarea"
+                                    maxLength="300"
+                                    rows="3"
                                     name="introduction"
                                     value={values.introduction}
                                     onChange={handleChange}
@@ -180,6 +166,9 @@ const CreateNoticia = (props) => {
                                 <OverlayTrigger trigger="focus" placement="right" overlay={sourcesPopover}>
                                     <Form.Control
                                         as="textarea"
+                                        style={{maxHeight: 80}}
+                                        rows="2"
+                                        maxLength="300"
                                         name="sources"
                                         value={values.sources}
                                         onChange={handleChange}
@@ -208,15 +197,10 @@ const CreateNoticia = (props) => {
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.status}</Form.Control.Feedback>
                             </Form.Group>
-                            <Modal.Footer className="modal-footer">
-                                <Button type="submit" className="btn btn-lg modal-btn-custom-login">Criar Notícia</Button>
-                                <Button onClick={props.onHide} className="btn btn-lg modal-btn-custom-close">Fechar</Button>
-                            </Modal.Footer>
+                                <Button type="submit" className="btn btn-lg modal-btn-custom-login submit-button-position">Criar Notícia</Button>
                         </Form>
                     )}
                 </Formik>
-            </Modal.Body>
-        </Modal>
     )
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Navbar, Nav, NavDropdown, Button} from 'react-bootstrap';
+import { Link, NavLink } from 'react-router-dom';
+import { Navbar, Nav, NavDropdown, Button, NavItem} from 'react-bootstrap';
 import SignupModal from '../Auth/Signup/SignupModal';
 import LoginModal from '../Auth/Login/LoginModal';
 import { remove } from '../../utils/localStorage.utils';
@@ -17,18 +17,22 @@ const NavigationBar = ({
     }) => {
         return (
             <Navbar expand="lg" className="is-honeydew sticky-top shadow-sm">
-                <Navbar.Brand as={Link} to="/" className="font-weight-bolder">MeuPolítico</Navbar.Brand>
+                <Navbar.Brand as={NavLink} to="/" className="font-weight-bolder">MeuPolítico</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link as={Link} to="/sobre">Sobre</Nav.Link>
-                        <Nav.Link as={Link} to="/faq">Perguntas Frequentes</Nav.Link>
+                        <Nav.Link as={NavLink} to="/sobre">Sobre</Nav.Link>
+                        <Nav.Link as={NavLink} to="/faq">Perguntas Frequentes</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 {authState ? <Navbar.Collapse className="justify-content-end">
-                    <NavDropdown title={currentUser ? currentUser : 'default'} alignRight >
-                        <NavDropdown.Item as={Link} to="/privado/usuario/politicos">Meus Políticos</NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/privado/usuario/noticias">Minhas Notícias</NavDropdown.Item>
+                    <Nav>
+                        <Nav.Link as={NavLink} to="/politicos">Meus Políticos</Nav.Link>
+                        <Nav.Link as={NavLink} to="/noticias">Minhas Notícias</Nav.Link>
+                    </Nav>
+                    <NavDropdown as={NavItem} title={currentUser ? currentUser : 'default'} alignRight >
+                        <NavDropdown.Item as={Link} to="/politicos">Meus Políticos</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to="/noticias">Minhas Notícias</NavDropdown.Item>
                         <NavDropdown.Item as={Link} to="/conta">Minha Conta</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item onClick={() => {remove(); setAuthState(false);}} >Sair</NavDropdown.Item>

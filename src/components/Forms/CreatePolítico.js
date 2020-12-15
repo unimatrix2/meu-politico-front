@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../services/api.service';
-import { Modal, Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
+import { Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -92,18 +92,6 @@ const CreatePolitico = (props) => {
         }
     }
     return (
-        <Modal
-            show={props.show}
-            onHide={props.onHide}
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-        >
-            <Modal.Header closeButton className="modal-header">
-                <Modal.Title id="contained-modal-title-vcenter" className="text-center">
-                    Criar um Político
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body className="modal-body">
                 <Formik
                     initialValues={initState}
                     onSubmit={handleSubmitMethod}
@@ -117,7 +105,7 @@ const CreatePolitico = (props) => {
                         touched,
                         errors,
                     }) => (
-                        <Form noValidate onSubmit={handleSubmit}>
+                        <Form noValidate onSubmit={handleSubmit} className="d-flex flex-column align-items-center mt-5">
                             <Form.Group as={Col} md="10" controlId="validationFormik09">
                                 <Form.Label>Nome Completo</Form.Label>
                                 <Form.Control
@@ -281,15 +269,10 @@ const CreatePolitico = (props) => {
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.status}</Form.Control.Feedback>
                             </Form.Group>
-                            <Modal.Footer className="modal-footer">
-                                <Button type="submit" className="btn btn-lg modal-btn-custom-login">Criar Político</Button>
-                                <Button onClick={props.onHide} className="btn btn-lg modal-btn-custom-close">Fechar</Button>
-                            </Modal.Footer>
+                                <Button type="submit" className="btn btn-lg modal-btn-custom-login submit-button-position">Criar Político</Button>
                         </Form>
                     )}
                 </Formik>
-            </Modal.Body>
-        </Modal>
     )
 }
 
