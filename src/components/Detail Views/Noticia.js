@@ -11,7 +11,7 @@ const Noticia = () => {
     const [sources, setSources] = useState([]);
     useEffect(() => {
         if (currentNews.length < 1) {
-            api.get(`${process.env.REACT_APP_API_BASE_URL}/noticias/privado/lista/${id}`)
+            api.get(`${process.env.REACT_APP_API_BASE_URL}/noticias/lista/${id}`)
                 .then(data => {
                     setCurrentNews(data.data);
                     setPoliticos(data.data.politicos);
