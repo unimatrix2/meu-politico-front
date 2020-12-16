@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, ListGroup, Jumbotron } from 'react-bootstrap';
+import { Container, ListGroup, Jumbotron, Button } from 'react-bootstrap';
 import api from '../../services/api.service';
 import { statusSwitch } from '../../utils/statusStyling';
+import EditNoticia from '../Forms/EditNoticia';
 import './Noticia.css';
 
-const Noticia = () => {
+const Noticia = (props) => {
     const { id } = useParams();
+    const [show, setShow] = useState(false);
+    const [updated, setUpdated] = useState(false);
     const [currentNews, setCurrentNews] = useState([]);
     const [politicos, setPoliticos] = useState([]);
     const [sources, setSources] = useState([]);
@@ -20,14 +23,29 @@ const Noticia = () => {
                 })
                 .catch(err => console.log(err));
         }
+        if (updated) {
+            api.get(`${process.env.REACT_APP_API_BASE_URL}/noticias/lista/${id}`)
+                .then(data => {
+                    setCurrentNews(data.data);
+                    setPoliticos(data.data.politicos);
+                    setSources(data.data.sources);
+                })
+                .catch(err => console.log(err));
+        }
     })
     return (
         <Container style={{marginTop: 20}}>
-            <Jumbotron className="detail-jumbo">
+            <Jumbotron className="detail-jumbo d-flex flex-column border-jumbo">
                 <h1>{currentNews.headline}</h1>
                 <p>{currentNews.introduction}</p>
                 <p>Status: <span className={statusSwitch(currentNews.status)}>{currentNews.status}</span></p>
                 <p>Categoria: <span className={statusSwitch(currentNews.category)}>{currentNews.category}</span></p>
+                {props.authed ? <Button
+                className="modal-btn-custom-login align-self-end"
+                onClick={() => setShow(true)}
+                >
+                <i className="far fa-edit"></i> Editar
+                </Button> : false}
                 <br></br>
                 <ListGroup>
                     <ListGroup.Item className="detail-jumbo">
@@ -56,6 +74,13 @@ const Noticia = () => {
                     </ListGroup.Item>
                 </ListGroup>
             </Jumbotron>
+            {props.authed ? <EditNoticia
+                news={currentNews}
+                sources={sources}
+                politicos={politicos}
+                show={show}
+                setUpdated={setUpdated}
+                onHide={() => setShow(false)} /> : false}
         </Container>
 
     )
