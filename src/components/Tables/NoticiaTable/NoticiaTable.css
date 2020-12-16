@@ -1,0 +1,10 @@
+.custom-link {
+    margin-top: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+.custom-link:hover {
+    text-decoration: none;
+    color: black;
+}
