@@ -46,10 +46,10 @@ function App() {
                 <Route exact path="/" render={() => <Home showSignup={showSignup} setShowSignup={setShowSignup} authState={isAuthed} />} />
                 <Route exact path="/sobre" render={() => <About isFaq={false} />} />
                 <Route exact path="/faq" render={() => <About isFaq={true} />} />
+                <Route exact path="/noticia/:id" component={() => <Noticia authed={isAuthed} />} />
                 {isAuthed ? <Route exact path="/conta" render={() => <Dashboard userData={currentUser} />} /> : <Redirect to="/" />}
                 {isAuthed ? <Route path="/politicos" component={PoliticoTable} /> : <Redirect to="/" /> }
                 {isAuthed ? <Route path="/noticias" component={NoticiaTable} /> : <Redirect to="/" />}
-                {isAuthed ? <Route path="/noticia/:id" component={Noticia} /> : <Redirect to="/" />}
                 <Route exact path="/divulgacandcontas.tse.jus.br" component={() => window.location = "https://divulgacandcontas.tse.jus.br"} />
             </Switch>
         </div>
