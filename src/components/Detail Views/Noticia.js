@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Container, ListGroup, Jumbotron } from 'react-bootstrap';
 import api from '../../services/api.service';
 import { statusSwitch } from '../../utils/statusStyling';
+import './Noticia.css';
 
 const Noticia = () => {
     const { id } = useParams();
@@ -20,22 +21,21 @@ const Noticia = () => {
                 .catch(err => console.log(err));
         }
     })
-    console.log(politicos[0])
     return (
         <Container style={{marginTop: 20}}>
-            <Jumbotron>
+            <Jumbotron className="detail-jumbo">
                 <h1>{currentNews.headline}</h1>
                 <p>{currentNews.introduction}</p>
                 <p>Status: <span className={statusSwitch(currentNews.status)}>{currentNews.status}</span></p>
                 <p>Categoria: <span className={statusSwitch(currentNews.category)}>{currentNews.category}</span></p>
                 <br></br>
                 <ListGroup>
-                    <ListGroup.Item>
+                    <ListGroup.Item className="detail-jumbo">
                         Políticos envolvidos:
                             {politicos.map(pol => {
                                 return (
-                                            <ListGroup>
-                                                <ListGroup.Item className="d-flex align-items-center">
+                                            <ListGroup key={pol._id}>
+                                                <ListGroup.Item className="d-flex align-items-center custom-list">
                                                     <img src={pol.imageURL} alt={pol.fullName} style={{width: 105, marginRight: 15, marginBottom: 10}}/>
                                                     <div style={{lineHeight: 1}}>
                                                         <p>{pol.fullName}</p>
@@ -48,10 +48,10 @@ const Noticia = () => {
                                 )
                             })}
                     </ListGroup.Item>
-                    <ListGroup.Item>
+                    <ListGroup.Item className="detail-jumbo">
                         Fontes Disponíveis:
                         <ListGroup>
-                            {sources.map(sauce => <ListGroup.Item>{sauce}</ListGroup.Item>)}
+                            {sources.map((sauce, idx) => <ListGroup.Item key={idx} className="custom-list">{sauce}</ListGroup.Item>)}
                         </ListGroup>
                     </ListGroup.Item>
                 </ListGroup>

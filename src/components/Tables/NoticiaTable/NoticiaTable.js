@@ -29,7 +29,7 @@ const PoliticoTable = () => {
                         Fontes: 
                     </Card.Text>
                     <ListGroup>
-                        {noticia.sources.map((src, idx) => <ListGroup.Item key={idx}>{src}</ListGroup.Item>)}
+                        {noticia.sources.map((src, idx) => <ListGroup.Item key={idx} className="sauce-list">{src}</ListGroup.Item>)}
                     </ListGroup>
                 </Card.Body>
             </Card>
