@@ -15,7 +15,9 @@ const PoliticoTable = () => {
         }
     })
 
-    const cards = userNoticias.map(noticia => {
+    return (
+        <Container>
+            {userNoticias.map(noticia => {
         return (
             <Card key={noticia._id} className="custom-link" as={Link} to={`/noticia/${noticia._id}`}>
                 <Card.Header as="h4">{noticia.headline}</Card.Header>
@@ -34,10 +36,7 @@ const PoliticoTable = () => {
                 </Card.Body>
             </Card>
         )
-    });
-    return (
-        <Container>
-            {cards}
+    })}
         </Container>
     )
 }
