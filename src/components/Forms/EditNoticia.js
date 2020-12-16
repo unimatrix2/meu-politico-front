@@ -68,7 +68,6 @@ const EditNoticia = (props) => {
                 `${process.env.REACT_APP_API_BASE_URL}/noticias/privado/editar/${props.news._id}`,
                 values)
                 .then(data => {
-                    console.log(data.data);
                     props.setUpdated(true);
                     alert('Notícia editada com sucesso!');
                     props.onHide();
@@ -83,7 +82,7 @@ const EditNoticia = (props) => {
     }
     return (
         <Modal
-        size="lg"
+            size="lg"
             show={props.show}
             onHide={props.onHide}
             aria-labelledby="contained-modal-title-vcenter"
@@ -94,7 +93,7 @@ const EditNoticia = (props) => {
                     Editar Notícia
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body className="modal-body">
             <Formik
                     initialValues={initState}
                     onSubmit={handleSubmitMethod}
@@ -213,7 +212,10 @@ const EditNoticia = (props) => {
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.status}</Form.Control.Feedback>
                             </Form.Group>
+                            <Modal.Footer className="modal-footer align-self-end">
                                 <Button type="submit" className="btn btn-lg modal-btn-custom-login">Editar Notícia</Button>
+                                <Button onClick={props.onHide} className="btn btn-lg modal-btn-custom-close">Fechar</Button>
+                            </Modal.Footer>
                         </Form>
                     )}
                 </Formik>
