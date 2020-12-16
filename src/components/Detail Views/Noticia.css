@@ -6,3 +6,7 @@
 .custom-list {
     background-color: var(--lightBlue) !important;
 }
+
+.border-jumbo {
+    box-sizing: border-box !important;
+}
