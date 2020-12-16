@@ -29,6 +29,7 @@ const Noticia = (props) => {
                     setCurrentNews(data.data);
                     setPoliticos(data.data.politicos);
                     setSources(data.data.sources);
+                    setUpdated(false);
                 })
                 .catch(err => console.log(err));
         }
