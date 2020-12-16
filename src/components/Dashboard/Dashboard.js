@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import CreatePolitico from '../Forms/CreatePolítico';
 import CreateNoticia from '../Forms/CreateNoticia';
 import EditarDados from '../Forms/EditarDados';
@@ -12,13 +11,7 @@ const Dashboard = ({userData}) => {
             <Container fluid className="d-flex flex-row dashboard-container">
                 <Row className="pt-3 w-100">
                     <Col lg={4} className="d-flex flex-column">
-                        <Button
-                        as={Link}
-                        size="lg"
-                        className="modal-btn-custom-login"
-                        style={{width: 'fit-content', alignSelf: 'center'}}>
-                            Meus políticos
-                        </Button>
+                        <h2>Meus políticos</h2>
                         <Container className="dashboard-table-container">
                             <CreatePolitico />
                         </Container>
