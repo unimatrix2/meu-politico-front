@@ -35,10 +35,6 @@ const Home = ({showSignup, setShowSignup, authState}) => {
                             </Button>
                         </Container>}
                 </Jumbotron>
-                <br></br><br></br>
-                <p className="h5 text-center">
-                    Últimas notícias registradas: (Terá um componente exibindo as últimas 10 notícias registradas)
-                </p>
             </main>
             <Footer />
         </>
