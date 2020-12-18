@@ -6,47 +6,58 @@ import Dashboard from './components/Dashboard/Dashboard';
 import PoliticoTable from './components/Tables/PoliticoTable/Politicotable';
 import NoticiaTable from './components/Tables/NoticiaTable/NoticiaTable';
 import Noticia from './components/Detail Views/Noticia';
+import SearchResults from './components/SearchResults/SearchResults';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { get, remove } from './utils/localStorage.utils';
 import api from './services/api.service';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
+    const [currentUser, setCurrentUser] = useState({})
+    const [searchValue, setSearchValue] = useState('');
+    const [currentSearchMethod, setCurrentSearchMethod] = useState('Selecione Busca');
     const [showSignup, setShowSignup] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
     const [isAuthed, setIsAuthed] = useState(get() ? true : false);
-    const [requested, setRequested] = useState(false)
-    const [currentUser, setCurrentUser] = useState(isAuthed && !requested ? (() => {
-        api.get(`${process.env.REACT_APP_API_BASE_URL}/usuario/token`)
-                .then(data => {
-                    setCurrentUser(data.data);
-                })
-                .catch(() => { setRequested(true); return false })
-    }) : () => { setRequested(true); return false });
+    const [showSearchBar, setShowSearchBar] = useState(true);
     useEffect(() => {
-        if (!currentUser && requested && isAuthed) {
+        if (isAuthed) {
             api.get(`${process.env.REACT_APP_API_BASE_URL}/usuario/token`)
-            .then(data => setCurrentUser(data.data))
-            .catch(() => { setIsAuthed(false); remove(); });
+                .then(data => setCurrentUser(data.data))
+                .catch(() => { remove(); setIsAuthed(false); })
         }
-    }, [isAuthed, currentUser, requested])
+    })
     return (
-        <div className="App" style={{backgroundColor: "var(--honeydew)"}}>
-            <NavigationBar
-            authState={isAuthed}
-            setAuthState={setIsAuthed}
-            showSignup={showSignup}
-            setShowSignup={setShowSignup}
-            showLogin={showLogin}
-            setShowLogin={setShowLogin}
-            currentUser={currentUser ? `${currentUser.firstName} ${currentUser.lastName}` : false}
-            />
-
+        <div className="App" style={{ backgroundColor: "var(--honeydew)" }}>
+                <NavigationBar
+                    authState={isAuthed}
+                    setAuthState={setIsAuthed}
+                    showSignup={showSignup}
+                    setShowSignup={setShowSignup}
+                    showLogin={showLogin}
+                    setShowLogin={setShowLogin}
+                    currentUser={currentUser ? `${currentUser.firstName} ${currentUser.lastName}` : false}
+                    search={searchValue}
+                    setSearch={setSearchValue}
+                    showBar={showSearchBar}
+                    setShowBar={setShowSearchBar}
+                    currentSearchMethod={currentSearchMethod}
+                    setCurrentSearchMethod={setCurrentSearchMethod}
+                />
             <Switch>
-                <Route exact path="/" render={() => <Home showSignup={showSignup} setShowSignup={setShowSignup} authState={isAuthed} />} />
+                <Route exact path="/" render={ (props) => <Home showSignup={showSignup} setShowSignup={setShowSignup} authState={isAuthed} /> } />
+                <Route exact path="/busca" render={(props) => {
+                    setShowSearchBar(false);
+                    return <SearchResults
+                        search={searchValue}
+                        setSearch={setSearchValue}
+                        currentSearchMethod={currentSearchMethod}
+                        setCurrentSearchMethod={setCurrentSearchMethod}
+                    />
+                }} />
                 <Route exact path="/sobre" render={() => <About isFaq={false} />} />
                 <Route exact path="/faq" render={() => <About isFaq={true} />} />
-                <Route exact path="/noticia/:id" component={() => <Noticia authed={isAuthed} />} />
+                <Route exact path="/noticia/:id" render={() => <Noticia authed={isAuthed} />} />
                 {isAuthed ? <Route exact path="/conta" render={() => <Dashboard userData={currentUser} />} /> : <Redirect to="/" />}
                 {isAuthed ? <Route path="/politicos" component={PoliticoTable} /> : <Redirect to="/" /> }
                 {isAuthed ? <Route path="/noticias" component={NoticiaTable} /> : <Redirect to="/" />}
