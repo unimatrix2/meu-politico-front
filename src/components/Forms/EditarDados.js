@@ -74,7 +74,7 @@ const EditarDados = (props) => {
 		email: props.userData ? props.userData.email : '',
 		cpf: props.userData ? props.userData.cpf : '',
 		password: "",
-	};
+		};
 
 	// Método de submissão do fomrmulário
 	const handleSubmitMethod = async (values, helperMethods) => {

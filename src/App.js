@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import PoliticoTable from './components/Tables/PoliticoTable/Politicotable';
 import NoticiaTable from './components/Tables/NoticiaTable/NoticiaTable';
 import Noticia from './components/Detail Views/Noticia';
+import Politico from './components/Detail Views/Politico';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { get, remove } from './utils/localStorage.utils';
 import api from './services/api.service';
@@ -47,6 +48,7 @@ function App() {
                 <Route exact path="/sobre" render={() => <About isFaq={false} />} />
                 <Route exact path="/faq" render={() => <About isFaq={true} />} />
                 <Route exact path="/noticia/:id" component={() => <Noticia authed={isAuthed} />} />
+                <Route exact path="/politico/:id" component={() => <Politico authed={isAuthed} />} />
                 {isAuthed ? <Route exact path="/conta" render={() => <Dashboard userData={currentUser} />} /> : <Redirect to="/" />}
                 {isAuthed ? <Route path="/politicos" component={PoliticoTable} /> : <Redirect to="/" /> }
                 {isAuthed ? <Route path="/noticias" component={NoticiaTable} /> : <Redirect to="/" />}
