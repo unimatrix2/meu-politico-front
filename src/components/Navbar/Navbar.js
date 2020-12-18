@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import { Navbar, Nav, NavDropdown, Button, NavItem, InputGroup, DropdownButton, Dropdown, FormControl } from 'react-bootstrap';
 import SignupModal from '../Auth/Signup/SignupModal';
 import LoginModal from '../Auth/Login/LoginModal';
@@ -7,7 +7,6 @@ import { remove } from '../../utils/localStorage.utils';
 import './Navbar.css';
 
 const NavigationBar = ({
-    history,
     authState,
     setAuthState,
     showSignup,
@@ -22,6 +21,7 @@ const NavigationBar = ({
     setCurrentSearchMethod,
     currentUser
     }) => {
+        const history = useHistory();
         return (
             <Navbar expand="lg" className="is-honeydew sticky-top shadow-sm d-flex">
                 <Navbar.Brand as={NavLink} onClick={() => {setShowBar(true) }} to="/" className="font-weight-bolder">MeuPolítico</Navbar.Brand>
@@ -55,6 +55,7 @@ const NavigationBar = ({
                         value={search}
                         onChange={(event) => setSearch(event.target.value)}
                         placeholder={currentSearchMethod === 'Selecione Busca' ? "Buscar políticos ou notícias" : `Buscar ${currentSearchMethod}`}
+                        onKeyPress={event => { if (event.key === "Enter") { history.push("/busca"); setShowBar(false) } }}
                         ></FormControl>}
                         <InputGroup.Prepend>
                             <Button
