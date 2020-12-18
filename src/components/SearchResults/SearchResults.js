@@ -23,8 +23,12 @@ const SearchResults = (props) => {
     })
 
     const handleSubmit = () => {
-        api.get(`${process.env.REACT_APP_API_BASE_URL}/${handleSearchMethod()}/buscar/?busca=${props.search.trim()}`)
-            .then(data => setResults(data.data));
+        if (props.search.trim().length > 0) {
+            api.get(`${process.env.REACT_APP_API_BASE_URL}/${handleSearchMethod()}/buscar/?busca=${props.search.trim()}`)
+                .then(data => setResults(data.data));
+        } else if (props.search.trim().length < 1) {
+            setResults([]);
+        }
     }
 
     return (
@@ -52,7 +56,7 @@ const SearchResults = (props) => {
                         value={props.search}
                         onChange={(event) => props.setSearch(event.target.value)}
                         placeholder={props.currentSearchMethod === 'Selecione Busca' ? "Buscar políticos ou notícias" : `Buscar ${props.currentSearchMethod}`}
-                        onKeyPress={(event) => { if (event.key === "Enter") { handleSubmit() } }}
+                        onKeyPress={(event) => { if (event.key === "Enter") { handleSubmit() } else return }}
                         ></FormControl>}
                 <InputGroup.Prepend>
                     <Button
@@ -78,6 +82,15 @@ const SearchResults = (props) => {
                     <Card.Title>{news.headline}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">Status: <span className={statusSwitch(news.status)}>{news.status}</span></Card.Subtitle>
                     <Card.Text>{news.introduction}</Card.Text>
+                </Card.Body>
+            </Card>) : false}
+            {props.currentSearchMethod === 'Político' && results.length > 0 ? results.map(politicos =>
+            <Card key={politicos._id} className="custom-link mr-5" as={Link} to={`/politico/${politicos._id}`} style={{ width: '18rem' }}>
+                <Card.Header as="h4">{politicos.fullName}</Card.Header>
+                <Card.Img  className="mx-auto" variant="top" src={politicos.imageURL} style={{ width: '10rem' }}/>
+                <Card.Body> 
+                    <Card.Subtitle className="mb-2 text-muted">{politicos.province}</Card.Subtitle>
+                        <Card.Text> Status: <span className={statusSwitch(politicos.status)}>{politicos.status}</span></Card.Text>
                 </Card.Body>
             </Card>) : false}
         </Container>
