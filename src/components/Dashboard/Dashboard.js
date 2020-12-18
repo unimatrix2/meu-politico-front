@@ -11,13 +11,13 @@ const Dashboard = ({userData}) => {
             <Container fluid className="d-flex flex-row dashboard-container">
                 <Row className="pt-3 w-100">
                     <Col lg={4} className="d-flex flex-column">
-                        <h2>Meus políticos</h2>
+                        <h2>Criar políticos</h2>
                         <Container className="dashboard-table-container">
                             <CreatePolitico />
                         </Container>
                     </Col>
                     <Col lg={4} className="d-flex flex-column">
-                        <h2>Minhas Notícias</h2>
+                        <h2>Criar Notícias</h2>
                         <Container className="dashboard-table-container">
                             <CreateNoticia />
                         </Container>
