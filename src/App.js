@@ -26,7 +26,7 @@ function App() {
                 .then(data => setCurrentUser(data.data))
                 .catch(() => { remove(); setIsAuthed(false); })
         }
-    })
+    }, [isAuthed])
     return (
         <div className="App" style={{ backgroundColor: "var(--honeydew)" }}>
                 <NavigationBar
