@@ -97,7 +97,7 @@ const EditPolitico = (props) => {
                                 <Form.Label>Nome Completo do Político</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        name="politicos"
+                                        name="fullName"
                                         value={values.fullName}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
@@ -111,7 +111,7 @@ const EditPolitico = (props) => {
                                 <Form.Label>Posição Atual</Form.Label>
                                 <Form.Control
                                     as="select"
-                                    name="category"
+                                    name="currentPosition"
                                     value={values.currentPosition}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
@@ -137,7 +137,7 @@ const EditPolitico = (props) => {
                                 <Form.Label>Última Posição</Form.Label>
                                 <Form.Control
                                     as="select"
-                                    name="category"
+                                    name="lastPosition"
                                     value={values.lastPosition}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
@@ -163,7 +163,7 @@ const EditPolitico = (props) => {
                                 <Form.Label>Estado</Form.Label>
                                 <Form.Control
                                     as="select"
-                                    name="category"
+                                    name="province"
                                     value={values.province}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
@@ -206,7 +206,7 @@ const EditPolitico = (props) => {
                                 <Form.Label>URL Oficial</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        name="politicos"
+                                        name="officialInfoURL"
                                         value={values.officialInfoURL}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
@@ -220,7 +220,7 @@ const EditPolitico = (props) => {
                                 <Form.Label>URL Imagem</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        name="politicos"
+                                        name="imageURL"
                                         value={values.imageURL}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
@@ -247,7 +247,7 @@ const EditPolitico = (props) => {
                                 <Form.Control.Feedback type="invalid">{errors.status}</Form.Control.Feedback>
                             </Form.Group>
                             <Modal.Footer className="modal-footer align-self-end">
-                                <Button type="submit" className="btn btn-lg modal-btn-custom-login">Editar Notícia</Button>
+                                <Button type="submit" className="btn btn-lg modal-btn-custom-login">Editar Político</Button>
                                 <Button onClick={props.onHide} className="btn btn-lg modal-btn-custom-close">Fechar</Button>
                             </Modal.Footer>
                         </Form>
