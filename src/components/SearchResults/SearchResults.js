@@ -21,6 +21,12 @@ const SearchResults = (props) => {
                 .then(data => setResults(data.data));
         }
     })
+
+    const handleSubmit = () => {
+        api.get(`${process.env.REACT_APP_API_BASE_URL}/${handleSearchMethod()}/buscar/?busca=${props.search.trim()}`)
+            .then(data => setResults(data.data));
+    }
+
     return (
         <>
         <Container className="mt-5">
@@ -46,19 +52,26 @@ const SearchResults = (props) => {
                         value={props.search}
                         onChange={(event) => props.setSearch(event.target.value)}
                         placeholder={props.currentSearchMethod === 'Selecione Busca' ? "Buscar políticos ou notícias" : `Buscar ${props.currentSearchMethod}`}
+                        onKeyPress={(event) => { if (event.key === "Enter") { handleSubmit() } }}
                         ></FormControl>}
                 <InputGroup.Prepend>
-                    <Button variant="outline-secondary" className="search-submit-button">Buscar</Button>
+                    <Button
+                    variant="outline-secondary"
+                    className="search-submit-button"
+                    onClick={() => handleSubmit()}
+                    >
+                        Buscar
+                    </Button>
                 </InputGroup.Prepend>
             </InputGroup>
         </Container>
-        <Container fluid className="ml-3 mr-3">
+        <Container fluid className="ml-3 mr-3 d-flex">
             {props.currentSearchMethod === 'Notícia' && results.length > 0 ? results.map(news =>
                 <Card
                 as={Link}
                 key={news._id}
                 to={`/noticia/${news._id}`}
-                className="custom-link shadow-sm"
+                className="custom-link shadow-sm mr-4"
                 style={{width: '23%'}}
                 >
                 <Card.Body>
