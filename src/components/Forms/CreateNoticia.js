@@ -69,7 +69,7 @@ const CreateNoticia = (props) => {
                 values
             );
             alert('Notícia criada com sucesso!')
-            props.onHide();
+            helperMethods.resetForm();
 
         } catch (error) {
             if (error.response.data && error.response.data.type === "Politico-Nao-Existe") {
