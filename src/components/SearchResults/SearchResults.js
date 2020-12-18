@@ -22,6 +22,7 @@ const SearchResults = (props) => {
         }
     })
     return (
+        <>
         <Container className="mt-5">
             <InputGroup>
                 <DropdownButton
@@ -50,13 +51,15 @@ const SearchResults = (props) => {
                     <Button variant="outline-secondary" className="search-submit-button">Buscar</Button>
                 </InputGroup.Prepend>
             </InputGroup>
+        </Container>
+        <Container fluid className="ml-3 mr-3">
             {props.currentSearchMethod === 'Notícia' && results.length > 0 ? results.map(news =>
                 <Card
                 as={Link}
                 key={news._id}
                 to={`/noticia/${news._id}`}
                 className="custom-link shadow-sm"
-                style={{width: '25%'}}
+                style={{width: '23%'}}
                 >
                 <Card.Body>
                     <Card.Title>{news.headline}</Card.Title>
@@ -65,6 +68,7 @@ const SearchResults = (props) => {
                 </Card.Body>
             </Card>) : false}
         </Container>
+        </>
     );
 }
 
