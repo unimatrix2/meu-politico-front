@@ -55,7 +55,7 @@ const Noticia = (props) => {
                                 return (
                                             <ListGroup key={pol._id}>
                                                 <ListGroup.Item className="d-flex align-items-center custom-list">
-                                                    <img src={pol.imageURL} alt={pol.fullName} style={{width: 105, marginRight: 15, marginBottom: 10}}/>
+                                                    <img src={pol.imageURL} alt={pol.fullName} style={{width: 105, marginRight: 15, marginBottom: 10, borderRadius: 3}}/>
                                                     <div style={{lineHeight: 1}}>
                                                         <p>{pol.fullName}</p>
                                                         <p>Posição atual: {pol.currentPosition}</p>
