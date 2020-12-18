@@ -1,6 +1,6 @@
 import React from 'react';
 import api from '../../services/api.service';
-import { Button, Form, Col, Popover, OverlayTrigger } from 'react-bootstrap';
+import { Button, Form, Col, Popover, OverlayTrigger, Modal } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -20,7 +20,7 @@ const politicosPopover = (
     </Popover>
 )
 
-const CreateNoticia = (props) => {
+const EditNoticia = (props) => {
     //schema de validação
 
     const schema = yup.object({
@@ -53,23 +53,25 @@ const CreateNoticia = (props) => {
 	});
     // estado inicial para o Formik
     const initState = {
-        headline: '',
-        introduction: '',
-        category: '',
-        sources: '',
-        politicos: '',
-        status: 'autorizar'
+        headline: props.news.headline,
+        introduction: props.news.introduction,
+        category: props.news.category,
+        sources: props.sources.join(','),
+        politicos: props.politicos.map(pol => pol.fullName).join(','),
+        status: 'editar'
     };
 
     // Método de submissão do fomrmulário
     const handleSubmitMethod = async (values, helperMethods) => {
         try {
-            await api.post(
-                `${process.env.REACT_APP_API_BASE_URL}/noticias/privado/criar`,
-                values
-            );
-            alert('Notícia criada com sucesso!')
-            helperMethods.resetForm();
+            api.put(
+                `${process.env.REACT_APP_API_BASE_URL}/noticias/privado/editar/${props.news._id}`,
+                values)
+                .then(data => {
+                    props.setUpdated(true);
+                    alert('Notícia editada com sucesso!');
+                    props.onHide();
+                })
 
         } catch (error) {
             if (error.response.data && error.response.data.type === "Politico-Nao-Existe") {
@@ -79,7 +81,20 @@ const CreateNoticia = (props) => {
         }
     }
     return (
-                <Formik
+        <Modal
+            size="lg"
+            show={props.show}
+            onHide={props.onHide}
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <Modal.Header closeButton className="modal-header">
+                <Modal.Title id="contained-modal-title-vcenter" className="text-center">
+                    Editar Notícia
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="modal-body">
+            <Formik
                     initialValues={initState}
                     onSubmit={handleSubmitMethod}
                     validationSchema={schema}
@@ -92,7 +107,7 @@ const CreateNoticia = (props) => {
                         touched,
                         errors,
                     }) => (
-                        <Form noValidate onSubmit={handleSubmit} className="d-flex flex-column align-items-center mt-5 form-container">
+                        <Form noValidate onSubmit={handleSubmit} className="d-flex flex-column align-items-center form-container">
                             <Form.Group as={Col} md="10" controlId="validationFormik16">
                                 <Form.Label>Nome Completo do(s) Político(s)</Form.Label>
                                 <OverlayTrigger trigger="focus" placement="right" overlay={politicosPopover}>
@@ -187,7 +202,7 @@ const CreateNoticia = (props) => {
                                     disabled
                                     type="text"
                                     name="status"
-                                    value="autorizar"
+                                    value="editar"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     isValid={touched.status && !errors.status}
@@ -197,11 +212,16 @@ const CreateNoticia = (props) => {
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.status}</Form.Control.Feedback>
                             </Form.Group>
-                                <Button type="submit" className="btn btn-lg modal-btn-custom-login submit-button-position">Criar Notícia</Button>
+                            <Modal.Footer className="modal-footer align-self-end">
+                                <Button type="submit" className="btn btn-lg modal-btn-custom-login">Editar Notícia</Button>
+                                <Button onClick={props.onHide} className="btn btn-lg modal-btn-custom-close">Fechar</Button>
+                            </Modal.Footer>
                         </Form>
                     )}
                 </Formik>
+            </Modal.Body>
+        </Modal>
     )
 }
 
-export default CreateNoticia;
+export default EditNoticia;

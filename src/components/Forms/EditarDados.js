@@ -80,8 +80,7 @@ const EditarDados = (props) => {
 	const handleSubmitMethod = async (values, helperMethods) => {
 		try {
 			delete values.confirmPassword;
-			delete values.cpf;
-			await api.post(
+			await api.put(
 				`${process.env.REACT_APP_API_BASE_URL}/usuario/privado/atualizar`,
 				values
 			);

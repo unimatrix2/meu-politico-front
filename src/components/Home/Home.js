@@ -7,12 +7,12 @@ import './Home.css';
 const Home = ({showSignup, setShowSignup, authState}) => {
     return (
         <>
-            <main className="main-home-content">
+            <main className="main-home-content d-flex flex-column justify-content-between">
                 <Jumbotron className="cambridge-blue-background d-flex flex-column align-items-center w-75 h-25 justify-content-center shadow align-self-center mt-4 ">
                     <h1 className="font-weight-bold display-3">Meu Político</h1>
                     <p className="h2" >O termômetro da honestidade</p>
                 </Jumbotron>
-                <Jumbotron className="cambridge-blue-background d-flex flex-column shadow align-items-center custom-jumbo justify-content-center">
+                <Jumbotron className="cambridge-blue-background d-flex flex-column shadow align-items-center custom-jumbo justify-content-center w-75 align-self-center">
                         <p className="lead blockquote text-center">Se ao menos a gente pudesse contar as mentiras desses políticos... poderíamos 
                         fazer com que  nos contem novas mentiras! Ou de repente… serem honestos, mas essa última proposta 
                         como diriam os políticos, é muito radical. O Meu Político é uma plataforma que chega para preencher 
@@ -35,10 +35,6 @@ const Home = ({showSignup, setShowSignup, authState}) => {
                             </Button>
                         </Container>}
                 </Jumbotron>
-                <br></br><br></br>
-                <p className="h5 text-center">
-                    Últimas notícias registradas: (Terá um componente exibindo as últimas 10 notícias registradas)
-                </p>
             </main>
             <Footer />
         </>
