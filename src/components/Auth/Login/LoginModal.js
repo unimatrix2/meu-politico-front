@@ -36,7 +36,7 @@ const LoginModal = ({show, onHide, setAuthState}) => {
     // Método de submissão do formulário
     const handleSubmitMethod = async (values, helperMethods) => {
         try {
-            await api.post("http://localhost:5000/api/usuario/acesso",
+            await api.post(`${process.env.REACT_APP_API_BASE_URL}/usuario/acesso`,
             values
             ).then(data => {
                 localSet(data.data);
