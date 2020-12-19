@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Container, ListGroup, Jumbotron, Button } from 'react-bootstrap';
 import api from '../../services/api.service';
 import { statusSwitch } from '../../utils/statusStyling';
@@ -54,7 +54,7 @@ const Noticia = (props) => {
                             {politicos.map(pol => {
                                 return (
                                             <ListGroup key={pol._id}>
-                                                <ListGroup.Item className="d-flex align-items-center custom-list">
+                                                <ListGroup.Item className="d-flex align-items-center custom-list" as={Link} to={`/politico/${pol._id}`}>
                                                     <img src={pol.imageURL} alt={pol.fullName} style={{width: 105, marginRight: 15, marginBottom: 10, borderRadius: 3}}/>
                                                     <div style={{lineHeight: 1}}>
                                                         <p>{pol.fullName}</p>
