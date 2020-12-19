@@ -73,7 +73,7 @@ const CreateNoticia = (props) => {
 
         } catch (error) {
             if (error.response.data && error.response.data.type === "Politico-Nao-Existe") {
-                helperMethods.setFieldError('politicos', error.response.data.message);
+                helperMethods.setFieldError('politicos', 'Nome(s) errado(s) ou não cadastrado(s)');
                 // Falta tratar mais erros
             }
         }
