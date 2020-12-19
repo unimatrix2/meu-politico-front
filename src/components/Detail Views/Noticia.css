@@ -5,6 +5,20 @@
 
 .custom-list {
     background-color: var(--lightBlue) !important;
+    color: black !important;
+    text-decoration: none !important;
+}
+
+.custom-list:hover {
+    background-color: var(--lightBlue) !important;
+    color: black !important;
+    text-decoration: none !important;
+}
+
+.custom-list:visited {
+    background-color: var(--lightBlue) !important;
+    color: black !important;
+    text-decoration: none !important;
 }
 
 .border-jumbo {
