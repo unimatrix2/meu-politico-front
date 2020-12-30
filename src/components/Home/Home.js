@@ -1,21 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Container } from 'react-bootstrap';
 import Footer from '../Footer/Footer';
 import './Home.css';
 
 const Home = ({showSignup, setShowSignup, authState}) => {
-    console.log(window.outerWidth)
+    const [width, setWidth] = useState(window.innerWidth);
+    const resizeHandler = () => setWidth(window.innerWidth);
+    useEffect(() => {
+        window.addEventListener("resize", resizeHandler);
+        return () => window.removeEventListener("resize", resizeHandler)
+    }, []);
     return (
         <>
             <main className="main-home-content d-flex flex-column justify-content-between">
-                <div className={window.innerWidth >= 1920 ? 
-                    "cambridge-blue-background d-flex flex-column align-items-center w-75 h-25 justify-content-center shadow align-self-center mt-4 jumbotron"
-                    : "jumbotron align-self-center cambridge-blue-background w-75 d-flex flex-column align-items-center h-25"}>
-                    <p className={window.innerWidth === 1920 ? "font-weight-bold display-3" : "font-weight-bold h2"}>Meu Político</p>
-                    <p className={window.innerWidth === 1920 ? "h2" : "h6"} >O termômetro da honestidade</p>
+                <div className="cambridge-blue-background d-flex flex-column align-items-center w-75 h-25 justify-content-center shadow align-self-center mt-4 jumbotron">
+                    <p className="title-jumbo-title">Meu Político</p>
+                    <p className="title-jumbo-subtitle">O termômetro da honestidade</p>
                 </div>
-                {window.innerWidth >= 720 ? <div className="cambridge-blue-background d-flex flex-column shadow align-items-center custom-jumbo justify-content-center w-75 align-self-center jumbotron">
+                {width >= 720 ? <div className="cambridge-blue-background d-flex flex-column shadow align-items-center custom-jumbo justify-content-center w-75 align-self-center jumbotron">
                         <p className="lead blockquote text-center">Se ao menos a gente pudesse contar as mentiras desses políticos... poderíamos 
                         fazer com que  nos contem novas mentiras! Ou de repente… serem honestos, mas essa última proposta 
                         como diriam os políticos, é muito radical. O Meu Político é uma plataforma que chega para preencher 

@@ -27,7 +27,11 @@
     flex-direction: column;
 }
 
-@media (max-width: 1080px) {
+.title-jumbo-title {
+    font-weight: bold;
+}
+
+@media (max-width: 1920px) {
     .main-home-content {
         height: calc(100vh - 56px);
     }
@@ -40,10 +44,26 @@
     .participate {
         max-height: 150px;
     }
+
+    .title-jumbo-title {
+        font-size: 4.5rem ;
+    }
+
+    .title-jumbo-subtitle {
+        font-size: 2rem;
+    }
 }
 
 @media (max-width: 360px) {
     .main-home-content {
         height: calc(100vh - 56px);
+    }
+
+    .title-jumbo-title {
+        font-size: 2rem;
+    }
+
+    .title-jumbo-subtitle {
+        font-size: 1rem;
     }
 }
