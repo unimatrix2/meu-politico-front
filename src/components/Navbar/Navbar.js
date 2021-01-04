@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link, NavLink, useHistory } from 'react-router-dom';
-import { Navbar, Nav, NavDropdown, Button, NavItem, InputGroup, DropdownButton, Dropdown, FormControl } from 'react-bootstrap';
+import { Link, NavLink } from 'react-router-dom';
+import { Navbar, Nav, NavDropdown, Button, NavItem} from 'react-bootstrap';
 import SignupModal from '../Auth/Signup/SignupModal';
 import LoginModal from '../Auth/Login/LoginModal';
+import SearchBar from '../SearchBar/SearchBar';
 import { remove } from '../../utils/localStorage.utils';
 import './Navbar.css';
 
@@ -21,7 +22,6 @@ const NavigationBar = ({
     setCurrentSearchMethod,
     currentUser
     }) => {
-        const history = useHistory();
         return (
             <Navbar expand="lg" className="is-honeydew sticky-top shadow-sm d-flex">
                 <Navbar.Brand as={NavLink} onClick={() => {setShowBar(true) }} to="/" className="font-weight-bolder">MeuPolítico</Navbar.Brand>
@@ -33,42 +33,13 @@ const NavigationBar = ({
                     </Nav>
                 </Navbar.Collapse>
                 {showBar ? <Navbar.Collapse>
-                <InputGroup>
-                        <DropdownButton
-                            as={InputGroup.Prepend}
-                            variant="outline-secondary"
-                            className="search-dropdown"
-                            title={currentSearchMethod}
-                            id="busca"
-                        >
-                            <Dropdown.Item as="button" onClick={() => setCurrentSearchMethod('Notícia') }>Notícia</Dropdown.Item>
-                            <Dropdown.Item as="button" onClick={() => setCurrentSearchMethod('Político') }>Político</Dropdown.Item>
-                        </DropdownButton>
-                        {currentSearchMethod === 'Selecione Busca' ? <FormControl
-                        disabled
-                        className="search-bar-field"
-                        value={search}
-                        onChange={(event) => setSearch(event.target.value)}
-                        placeholder={currentSearchMethod === 'Selecione Busca' ? "Buscar políticos ou notícias" : `Buscar ${currentSearchMethod}`}
-                        ></FormControl> : <FormControl
-                        className="search-bar-field"
-                        value={search}
-                        onChange={(event) => setSearch(event.target.value)}
-                        placeholder={currentSearchMethod === 'Selecione Busca' ? "Buscar políticos ou notícias" : `Buscar ${currentSearchMethod}`}
-                        onKeyPress={event => { if (event.key === "Enter") { history.push("/busca"); setShowBar(false) } }}
-                        ></FormControl>}
-                        <InputGroup.Prepend>
-                            <Button
-                                as={Link}
-                                variant="outline-secondary"
-                                to="/busca"
-                                className="search-submit-button"
-                                onClick={() => setShowBar(false)}
-                            >
-                            Buscar
-                            </Button>
-                        </InputGroup.Prepend>
-                    </InputGroup>
+                    <SearchBar
+                    search={search}
+                    setSearch={setSearch}
+                    currentSearchMethod={currentSearchMethod}
+                    setCurrentSearchMethod={setCurrentSearchMethod}
+                    setShowBar={setShowBar}
+                    />
                 </Navbar.Collapse> : false}
                 {authState ? <Navbar.Collapse className="ml-auto justify-content-end">
                     <Nav>

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/api.service';
-import { Container, InputGroup, DropdownButton, FormControl, Button, Dropdown, Card } from 'react-bootstrap';
+import { Container, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import SearchBar from '../SearchBar/SearchBar';
 import { statusSwitch } from '../../utils/statusStyling';
-const SearchResults = (props) => {
+
+const SearchResults = ({currentSearchMethod, setCurrentSearchMethod, search, setSearch}) => {
     const handleSearchMethod = () => {
-            switch (props.currentSearchMethod) {
+            switch (currentSearchMethod) {
                 case 'Notícia':
                     return 'noticias';
                 case 'Político':
@@ -16,17 +18,17 @@ const SearchResults = (props) => {
     }
     const [results, setResults] = useState([]);
     useEffect(() => {
-        if (props.search.length > 0 && props.currentSearchMethod !== 'Selecione Busca' && results.length === 0) {
-            api.get(`${process.env.REACT_APP_API_BASE_URL}/${handleSearchMethod()}/buscar/?busca=${props.search}`)
+        if (search.length > 0 && currentSearchMethod !== 'Selecione Busca' && results.length === 0) {
+            api.get(`${process.env.REACT_APP_API_BASE_URL}/${handleSearchMethod()}/buscar/?busca=${search}`)
                 .then(data => setResults(data.data));
         }
     })
 
     const handleSubmit = () => {
-        if (props.search.trim().length > 0) {
-            api.get(`${process.env.REACT_APP_API_BASE_URL}/${handleSearchMethod()}/buscar/?busca=${props.search.trim()}`)
+        if (search.trim().length > 0) {
+            api.get(`${process.env.REACT_APP_API_BASE_URL}/${handleSearchMethod()}/buscar/?busca=${search.trim()}`)
                 .then(data => setResults(data.data));
-        } else if (props.search.trim().length < 1) {
+        } else if (search.trim().length < 1) {
             setResults([]);
         }
     }
@@ -34,43 +36,16 @@ const SearchResults = (props) => {
     return (
         <>
         <Container className="mt-5">
-            <InputGroup>
-                <DropdownButton
-                    as={InputGroup.Prepend}
-                    variant="outline-secondary"
-                    className="search-dropdown"
-                    title={props.currentSearchMethod}
-                    id="busca"
-                >
-                    <Dropdown.Item as="button" onClick={() => props.setCurrentSearchMethod('Notícia') }>Notícia</Dropdown.Item>
-                    <Dropdown.Item as="button" onClick={() => props.setCurrentSearchMethod('Político') }>Político</Dropdown.Item>
-                </DropdownButton>
-                {props.currentSearchMethod === 'Selecione Busca' ? <FormControl
-                        disabled
-                        className="search-bar-field"
-                        value={props.search}
-                        onChange={(event) => props.setSearch(event.target.value)}
-                        placeholder={props.currentSearchMethod === 'Selecione Busca' ? "Buscar políticos ou notícias" : `Buscar ${props.currentSearchMethod}`}
-                        ></FormControl> : <FormControl
-                        className="search-bar-field"
-                        value={props.search}
-                        onChange={(event) => props.setSearch(event.target.value)}
-                        placeholder={props.currentSearchMethod === 'Selecione Busca' ? "Buscar políticos ou notícias" : `Buscar ${props.currentSearchMethod}`}
-                        onKeyPress={(event) => { if (event.key === "Enter") { handleSubmit() } else return }}
-                        ></FormControl>}
-                <InputGroup.Prepend>
-                    <Button
-                    variant="outline-secondary"
-                    className="search-submit-button"
-                    onClick={() => handleSubmit()}
-                    >
-                        Buscar
-                    </Button>
-                </InputGroup.Prepend>
-            </InputGroup>
+            <SearchBar
+            handleSubmit={handleSubmit}
+            currentSearchMethod={currentSearchMethod}
+            setCurrentSearchMethod={setCurrentSearchMethod}
+            search={search}
+            setSearch={setSearch}
+            />
         </Container>
         <Container fluid className="ml-3 mr-3 d-flex">
-            {props.currentSearchMethod === 'Notícia' && results.length > 0 ? results.map(news =>
+            {currentSearchMethod === 'Notícia' && results.length > 0 ? results.map(news =>
                 <Card
                 as={Link}
                 key={news._id}
@@ -84,7 +59,7 @@ const SearchResults = (props) => {
                     <Card.Text>{news.introduction}</Card.Text>
                 </Card.Body>
             </Card>) : false}
-            {props.currentSearchMethod === 'Político' && results.length > 0 ? results.map(politicos =>
+            {currentSearchMethod === 'Político' && results.length > 0 ? results.map(politicos =>
             <Card key={politicos._id} className="custom-link mr-5" as={Link} to={`/politico/${politicos._id}`} style={{ width: '18rem' }}>
                 <Card.Header as="h4">{politicos.fullName}</Card.Header>
                 <Card.Img  className="mx-auto" variant="top" src={politicos.imageURL} style={{ width: '10rem' }}/>
